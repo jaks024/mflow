@@ -13,19 +13,29 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
+.App-body {
+  background-color: #000000;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   font-size: calc(10px + 2vmin);
   color: white;
 }
 
 .App-link {
   color: #61dafb;
+}
+
+.income-indicator{
+  color: rgb(10, 255, 10);
+  margin: 0 5px;
+}
+
+.expense-indicator{
+  color: red;
+  margin: 0 5px;
 }
 
 @keyframes App-logo-spin {

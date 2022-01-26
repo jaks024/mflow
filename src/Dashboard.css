@@ -1,0 +1,29 @@
+.Dashboard-body {
+    width: 1000px;
+    display: flex;
+    flex-direction: column;
+}
+
+.Dashboard-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    height: 100px;
+}
+
+.Dashboard-header-label {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: left;
+    margin: 30px 0;
+    width: 150px;
+}
+
+.Dashboard-nav-btn {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    width: 125px;
+    height: 30px;
+    margin: auto 0px;
+}

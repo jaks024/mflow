@@ -1,0 +1,44 @@
+.SummaryPage-header {
+    
+}
+
+.SummaryPage-header-label{
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+    text-align: start;
+    margin-top: 20px;
+}
+
+.SummaryPage-income-expense-block {
+    font-size: 40px;
+    font-weight: bold;
+    display: flex;
+}
+
+.SummaryPage-income-expense-line {
+    margin-right: 50px;
+}
+
+.SummaryPage-entry {
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.SummaryPage-entry-main{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    font-weight: bold;
+}
+
+.SummaryPage-entry-main > div {
+    margin-right: 15px;
+}
+
+.SummaryPage-entry-collapse{
+    text-align: left;
+    margin-left: 20px;
+}
