@@ -1,3 +1,45 @@
 .AddPage-form {
     font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.AddPage-header-label{
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+    text-align: start;
+    margin-bottom: 20px;
+}
+
+.AddPage-field-block{
+    flex-direction: row;
+    display: flex;
+}
+
+.AddPage-field-label{
+    font-size: 15px;
+    font-weight: bold;
+    width: 100px;
+    text-align: left;
+}
+
+.AddPage-field-input{
+    width: 250px;
+    background-color: transparent;
+    border: 1px white solid;
+    margin: 5px;
+    color: white;
+}
+
+.AddPage-form-btn{
+    background: transparent;
+    border: 1px white solid;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    height: 30px;
+    width: 100px;
+    margin-right: 10px;
 }

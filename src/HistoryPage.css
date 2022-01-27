@@ -1,0 +1,47 @@
+.HistoryPage-body{
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 60px);
+    justify-content: flex-start;
+}
+
+.HistoryPage-header-label{
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+    text-align: start;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.HistoryPage-entry {
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.HistoryPage-entry-main{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    font-weight: bold;
+}
+
+.HistoryPage-entry-main > div {
+    margin-right: 15px;
+}
+
+.HistoryPage-entry-collapse{
+    text-align: left;
+    margin-left: 20px;
+}
+
+.HistoryPage-content{
+    height: 100%;
+    width: 100%;
+}
+
+.simplebar-scrollbar {
+    background-color: rgb(20, 20, 20);
+}

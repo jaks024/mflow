@@ -1,7 +1,9 @@
 .Dashboard-body {
     width: 1000px;
+    height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .Dashboard-header{
@@ -26,4 +28,17 @@
     width: 125px;
     height: 30px;
     margin: auto 0px;
+}
+
+.Dashboard-content{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.Dashboard-content-right{
+    width: 50%;
+    height: 80%;
+    max-height: 800px;
 }

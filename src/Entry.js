@@ -1,5 +1,6 @@
 class Entry {
-    constructor(date, income, expense, category, location, description) {
+    constructor(id, date, income, expense, category, location, description) {
+        this.id = id;
         this.date = date;
         this.income = income;
         this.expense = expense;
