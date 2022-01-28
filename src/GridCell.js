@@ -4,7 +4,7 @@ class GridCell extends React.Component {
 
     render() {
         return (
-            <div>
+            <div key={this.props.cellId}>
                 {this.props.value}
             </div>
         );
