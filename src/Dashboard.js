@@ -23,6 +23,13 @@ class Dashboard extends React.Component {
         this.setState({currentYearStatement: newCurrentYearStatement})
     }
 
+    handleNewCategory = (c) => {
+        const newCurrentYearStatement = this.state.currentYearStatement;
+        if (newCurrentYearStatement.addCategory(c)) {
+            this.setState({currentYearStatement: newCurrentYearStatement})
+        }
+    }
+
     render() {
         return (
             <div className="Dashboard-body">
@@ -35,7 +42,8 @@ class Dashboard extends React.Component {
                                      currentMonth={this.state.currentMonth} />
                         <br/>
                         <AddPage currentYearStatement={this.state.currentYearStatement} 
-                                 onAdd={this.handleNewEntry}/>
+                                 onAddEntry={this.handleNewEntry}
+                                 onAddCategory={this.handleNewCategory}/>
                     </div>
                     <div className="Dashboard-content-right">
                        <HistoryPage currentYearStatement={this.state.currentYearStatement} 

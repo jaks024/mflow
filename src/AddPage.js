@@ -8,6 +8,7 @@ class AddPage extends React.Component {
         super(props);
         this.state = {
             idCount: 0,
+            newCategoryInputValue: "",
         }
     }
 
@@ -18,8 +19,8 @@ class AddPage extends React.Component {
         return date + " " + time;
     }
 
-    onAdd = () => {
-        this.props.onAdd(new Entry(
+    onAddEntry = () => {
+        this.props.onAddEntry(new Entry(
             this.state.idCount, 
             this.timeNow(), 
             123, 
@@ -28,6 +29,17 @@ class AddPage extends React.Component {
             "Sobeys", 
             "Bought groceries"));
         this.setState({idCount: this.state.idCount + 1});
+    }
+
+    onAddCategory = () => {
+        if (this.state.newCategoryInputValue.length > 0) {
+            this.props.onAddCategory(this.state.newCategoryInputValue);
+        }
+    }
+
+    updateNewCategoryInputValue(evt) {
+        const val = evt.target.value;
+        this.setState({newCategoryInputValue: val});
     }
 
     render() {
@@ -63,7 +75,24 @@ class AddPage extends React.Component {
                     </div>
                     <br/>
                     <div className="AddPage-field-block">
-                        <button className="AddPage-form-btn" onClick={() => this.onAdd()}>Add</button>
+                        <button className="AddPage-form-btn" onClick={() => this.onAddEntry()}>Add</button>
+                        <button className="AddPage-form-btn">Clear</button>
+                    </div>
+                </div>
+                <br/>
+                <div className="AddPage-header-label">
+                    Add Category
+                </div>
+                <div className="AddPage-form">
+                    <div className="AddPage-field-block">
+                        <div className="AddPage-field-label">Category</div>
+                        <input className="AddPage-field-input" inputMode="text" 
+                            value={this.state.newCategoryInputValue}
+                            onChange={evt => this.updateNewCategoryInputValue(evt)}></input>
+                    </div>
+                    <br/>
+                    <div className="AddPage-field-block">
+                        <button className="AddPage-form-btn" onClick={() => this.onAddCategory()}>Add</button>
                         <button className="AddPage-form-btn">Clear</button>
                     </div>
                 </div>

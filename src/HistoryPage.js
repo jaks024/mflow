@@ -2,9 +2,17 @@ import React from "react";
 import './HistoryPage.css'
 import 'simplebar'; // or "import SimpleBar from 'simplebar';" if you want to use it manually.
 import 'simplebar/dist/simplebar.css';
+import GridColumn from "./GridColumn";
 
 class HistoryPage extends React.Component {
 
+
+    renderAllCategories(categories) {
+        return categories.map((category) => {
+            console.log("render " + category);
+            return <GridColumn key={category + "-column"} columnContent={[category]} />;
+        });
+    }
 
     renderAllEntries(entries) {
         return entries.map((entry) => {
@@ -34,7 +42,8 @@ class HistoryPage extends React.Component {
             <div className="HistoryPage-body">
                 <div className="HistoryPage-header-label">History</div>
                 <div className="HistoryPage-content" data-simplebar data-simplebar-auto-hide="false">
-                    <div>
+                    <div className="HistoryPage-grid">
+                        {this.renderAllCategories(this.props.currentYearStatement.categories)}
                         {this.renderAllEntries(this.props.currentYearStatement.getMonthEntries(this.props.currentMonth))}
                     </div>
                 </div>

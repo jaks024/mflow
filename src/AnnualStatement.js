@@ -7,6 +7,7 @@ class AnnualStatement {
         this.totalIncome = 0;
         this.totalExpense = 0;
         this.monthlyStatements = this.initEmptyMonthStatement();
+        this.categories = [];
     }
 
     initEmptyMonthStatement() {
@@ -36,6 +37,15 @@ class AnnualStatement {
             this.monthlyStatements[month - 1].addEntry(entry);
         }
         this.calculateTotal();
+    }
+
+    addCategory(category) {
+        console.log(this.categories);
+        if (this.categories.length > 0 && this.categories.includes(category)) {
+            return false;
+        }
+        this.categories.push(category);
+        return true;
     }
 
     getMonthTotalIncome(month) {
