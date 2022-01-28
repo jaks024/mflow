@@ -32,7 +32,7 @@ class AddPage extends React.Component {
 
     render() {
         return (
-            <div className="AddPage">
+            <div className="AddPage-body">
                 <div className="AddPage-header-label">
                     Add Entry
                 </div>

@@ -1,27 +1,13 @@
 import React from "react";
-import Entry from './Entry';
 import './HistoryPage.css'
 import 'simplebar'; // or "import SimpleBar from 'simplebar';" if you want to use it manually.
 import 'simplebar/dist/simplebar.css';
 
 class HistoryPage extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            entries: [],
-        }
-    }
 
-    handleNewEntry(entry) {
-        // change to setState
-        this.state = {
-            entries: [...this.state.entries, entry],
-        }
-    }
-
-    renderAllEntries() {
-        return this.state.entries.map((entry) => {
+    renderAllEntries(entries) {
+        return entries.map((entry) => {
             return this.renderEntry(entry);
         });
     }
@@ -49,7 +35,7 @@ class HistoryPage extends React.Component {
                 <div className="HistoryPage-header-label">History</div>
                 <div className="HistoryPage-content" data-simplebar data-simplebar-auto-hide="false">
                     <div>
-                        {this.renderAllEntries()}
+                        {this.renderAllEntries(this.props.currentYearStatement.getMonthEntries(this.props.currentMonth))}
                     </div>
                 </div>
             </div>

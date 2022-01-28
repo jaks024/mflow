@@ -1,4 +1,3 @@
-import Entry from "./Entry";
 
 class MonthStatement {
     constructor(id, month) {

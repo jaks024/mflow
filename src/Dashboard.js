@@ -3,7 +3,6 @@ import SummaryPage from "./SummaryPage";
 import './Dashboard.css'
 import AddPage from "./AddPage";
 import HistoryPage from "./HistoryPage";
-import MonthStatement from "./MonthStatement";
 import AnnualStatement from "./AnnualStatement";
 
 
@@ -15,33 +14,32 @@ class Dashboard extends React.Component {
         this.state = {
             currentMonth: 1,
             currentYearStatement: new AnnualStatement(0, "2022"),
-            summaryPage: new SummaryPage(props),
-            historyPage: new HistoryPage(props),
         }
     }
 
     handleNewEntry = (e) => {
-        this.state.historyPage.handleNewEntry(e);
-        console.log("added new entry");
-        this.state.currentYearStatement.addEntryToMonthStatement(this.state.currentMonth, e);
-        this.state.summaryPage.update(this.state.currentYearStatement, this.state.currentMonth);
-        this.forceUpdate();
+        const newCurrentYearStatement = this.state.currentYearStatement;
+        newCurrentYearStatement.addEntryToMonthStatement(this.state.currentMonth, e);
+        this.setState({currentYearStatement: newCurrentYearStatement})
     }
 
     render() {
         return (
             <div className="Dashboard-body">
-                <div className="Dashboard-header">
-                    <div className="Dashboard-header-label">MFlow</div>
-                </div>
                 <div className="Dashboard-content">
-                    <div>
-                        {this.state.summaryPage.render()}
+                    <div className="Dashbaord-content-left">
+                    <div className="Dashboard-header">
+                        <div className="Dashboard-header-label">MFlow</div>
+                    </div>
+                        <SummaryPage currentYearStatement={this.state.currentYearStatement}
+                                     currentMonth={this.state.currentMonth} />
                         <br/>
-                        <AddPage onAdd={this.handleNewEntry}/>
+                        <AddPage currentYearStatement={this.state.currentYearStatement} 
+                                 onAdd={this.handleNewEntry}/>
                     </div>
                     <div className="Dashboard-content-right">
-                       {this.state.historyPage.render()}
+                       <HistoryPage currentYearStatement={this.state.currentYearStatement} 
+                                    currentMonth={this.state.currentMonth}/>
                     </div>
                 </div>
                 

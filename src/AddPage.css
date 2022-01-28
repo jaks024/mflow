@@ -1,3 +1,7 @@
+.AddPage-body{
+    width: 100%;
+}
+
 .AddPage-form {
     font-size: 20px;
     display: flex;

@@ -44,6 +44,9 @@ class AnnualStatement {
     getMonthTotalExpense(month) {
         return this.monthlyStatements[month - 1].totalExpense;
     }
+    getMonthEntries(month) {
+        return this.monthlyStatements[month - 1].monthlyEntires;
+    }
 }
 
 export default AnnualStatement;
