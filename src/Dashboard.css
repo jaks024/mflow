@@ -40,7 +40,13 @@
 }
 
 .Dashbaord-content-left{
-    width: 450px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.Dashboard-content-left-scrollabe{
+    height: calc(100% - 100px);
 }
 
 .Dashboard-content-right{

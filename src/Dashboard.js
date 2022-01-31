@@ -4,7 +4,8 @@ import './Dashboard.css'
 import AddPage from "./AddPage";
 import HistoryPage from "./HistoryPage";
 import AnnualStatement from "./AnnualStatement";
-
+import 'simplebar'; 
+import 'simplebar/dist/simplebar.css';
 
 class Dashboard extends React.Component {
 
@@ -34,16 +35,19 @@ class Dashboard extends React.Component {
         return (
             <div className="Dashboard-body">
                 <div className="Dashboard-content">
-                    <div className="Dashbaord-content-left">
-                    <div className="Dashboard-header">
-                        <div className="Dashboard-header-label">MFlow</div>
-                    </div>
-                        <SummaryPage currentYearStatement={this.state.currentYearStatement}
-                                     currentMonth={this.state.currentMonth} />
-                        <br/>
-                        <AddPage currentYearStatement={this.state.currentYearStatement} 
-                                 onAddEntry={this.handleNewEntry}
-                                 onAddCategory={this.handleNewCategory}/>
+                    <div className="Dashbaord-content-left" >
+                        <div className="Dashboard-header">
+                            <div className="Dashboard-header-label">MFlow</div>
+                        </div>
+                        <div className="Dashboard-content-left-scrollabe" data-simplebar>
+                            <SummaryPage currentYearStatement={this.state.currentYearStatement}
+                                        currentMonth={this.state.currentMonth} />
+                            <br/>
+                            <AddPage currentYearStatement={this.state.currentYearStatement} 
+                                    onAddEntry={this.handleNewEntry}
+                                    onAddCategory={this.handleNewCategory}/>
+                        </div>
+
                     </div>
                     <div className="Dashboard-content-right">
                        <HistoryPage currentYearStatement={this.state.currentYearStatement} 

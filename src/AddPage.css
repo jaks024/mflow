@@ -30,7 +30,7 @@
 }
 
 .AddPage-field-input{
-    width: 250px;
+    width: 100%;
     background-color: transparent;
     border: 1px white solid;
     margin: 5px;

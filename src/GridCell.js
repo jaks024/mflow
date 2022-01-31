@@ -2,9 +2,15 @@ import React from "react";
 
 class GridCell extends React.Component {
 
+    static cellId = 0;
+    static newCellId() {
+        this.cellId++;
+        return this.cellId;
+    }
+
     render() {
         return (
-            <div key={this.props.cellId}>
+            <div className= {this.props.isDate ? "grid-cell grid-cell-date" : "grid-cell"}>
                 {this.props.value}
             </div>
         );

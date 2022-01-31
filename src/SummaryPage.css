@@ -10,6 +10,10 @@
     margin-top: 20px;
 }
 
+.SummaryPage-main-header-label{
+    margin-top: 0px;
+}
+
 .SummaryPage-income-expense-block {
     font-size: 40px;
     font-weight: bold;

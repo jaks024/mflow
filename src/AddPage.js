@@ -1,6 +1,7 @@
 import React from 'react';
 import './AddPage.css'
 import Entry from './Entry';
+import Date from './Date';
 
 class AddPage extends React.Component {
 
@@ -8,7 +9,13 @@ class AddPage extends React.Component {
         super(props);
         this.state = {
             idCount: 0,
-            newCategoryInputValue: "",
+            inputDate: "2022/1/1",             // 0
+            inputCategory: "abc",         // 1
+            inputLocation: "soeb",         // 2
+            inputIncome: "123",           // 3
+            inputExpense: "423",          // 4
+            inputDescription: "dsafsafsd",      // 5
+            inputNewCategory: "",      // 6
         }
     }
 
@@ -20,26 +27,42 @@ class AddPage extends React.Component {
     }
 
     onAddEntry = () => {
+        let dateParts = this.state.inputDate.split("/");
+        console.log(dateParts);
         this.props.onAddEntry(new Entry(
             this.state.idCount, 
-            this.timeNow(), 
-            123, 
-            456, 
-            "Groceries", 
-            "Sobeys", 
-            "Bought groceries"));
+            new Date(dateParts[0], dateParts[1], dateParts[2]), 
+            this.state.inputIncome, 
+            this.state.inputExpense, 
+            this.state.inputCategory, 
+            this.state.inputLocation, 
+            this.state.inputDescription));
         this.setState({idCount: this.state.idCount + 1});
+        console.log(this.state.inputIncome);
     }
 
     onAddCategory = () => {
-        if (this.state.newCategoryInputValue.length > 0) {
-            this.props.onAddCategory(this.state.newCategoryInputValue);
+        if (this.state.inputNewCategory.length > 0) {
+            this.props.onAddCategory(this.state.inputNewCategory);
         }
     }
 
-    updateNewCategoryInputValue(evt) {
+    updateInput(field, evt) {
         const val = evt.target.value;
-        this.setState({newCategoryInputValue: val});
+        if (field === 0) 
+            this.setState({inputDate: val});
+        else if (field === 1) 
+            this.setState({inputCategory: val});
+        else if (field === 2) 
+            this.setState({inputLocation: val});
+        else if (field === 3) 
+            this.setState({inputIncome: val});
+        else if (field === 4) 
+            this.setState({inputExpense: val});
+        else if (field === 5) 
+            this.setState({inputDescription: val});
+        else if (field === 6)
+            this.setState({inputNewCategory: val});
     }
 
     render() {
@@ -51,27 +74,39 @@ class AddPage extends React.Component {
                 <div className="AddPage-form">
                     <div className="AddPage-field-block">
                         <div className="AddPage-field-label">Date</div>
-                        <input className="AddPage-field-input" inputMode="text"></input>
+                        <input className="AddPage-field-input" inputMode="text"
+                            value={this.state.inputDate}
+                            onChange={evt => this.updateInput(0, evt)}></input>
                     </div>
                     <div className="AddPage-field-block">
                         <div className="AddPage-field-label">Category</div>
-                        <input className="AddPage-field-input" inputMode="text"></input>
+                        <input className="AddPage-field-input" inputMode="text"
+                            value={this.state.inputCategory}
+                            onChange={evt => this.updateInput(1, evt)}></input>
                     </div>
                     <div className="AddPage-field-block">
                         <div className="AddPage-field-label">Location</div>
-                        <input className="AddPage-field-input" inputMode="text"></input>
+                        <input className="AddPage-field-input" inputMode="text"
+                            value={this.state.inputLocation}
+                            onChange={evt => this.updateInput(2, evt)}></input>
                     </div>
                     <div className="AddPage-field-block">
                         <div className="AddPage-field-label">Income</div>
-                        <input className="AddPage-field-input" inputMode="numeric"></input>
+                        <input className="AddPage-field-input" inputMode="numeric"
+                            value={this.state.inputIncome}
+                            onChange={evt => this.updateInput(3, evt)}></input>
                     </div>
                     <div className="AddPage-field-block">
                         <div className="AddPage-field-label">Expense</div>
-                        <input className="AddPage-field-input" inputMode="numeric"></input>
+                        <input className="AddPage-field-input" inputMode="numeric"
+                            value={this.state.inputExpense}
+                            onChange={evt => this.updateInput(4, evt)}></input>
                     </div>
                     <div className="AddPage-field-block">
                         <div className="AddPage-field-label">Description</div>
-                        <input className="AddPage-field-input" inputMode="text"></input>
+                        <input className="AddPage-field-input" inputMode="text"
+                            value={this.state.inputDescription}
+                            onChange={evt => this.updateInput(5, evt)}></input>
                     </div>
                     <br/>
                     <div className="AddPage-field-block">
@@ -87,8 +122,8 @@ class AddPage extends React.Component {
                     <div className="AddPage-field-block">
                         <div className="AddPage-field-label">Category</div>
                         <input className="AddPage-field-input" inputMode="text" 
-                            value={this.state.newCategoryInputValue}
-                            onChange={evt => this.updateNewCategoryInputValue(evt)}></input>
+                            value={this.state.inputNewCategory}
+                            onChange={evt => this.updateInput(6, evt)}></input>
                     </div>
                     <br/>
                     <div className="AddPage-field-block">

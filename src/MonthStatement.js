@@ -12,8 +12,8 @@ class MonthStatement {
         this.totalIncome = 0;
         this.totalExpense = 0;
         this.monthlyEntires.forEach(entry => {
-            this.totalIncome += entry.income;
-            this.totalExpense += entry.expense;
+            this.totalIncome += +entry.income;
+            this.totalExpense += +entry.expense;
         });
     }
 
