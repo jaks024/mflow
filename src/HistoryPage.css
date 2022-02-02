@@ -3,6 +3,11 @@
     height: 100%;
 }
 
+.HistoryPage-header-content{
+    display: flex;
+    flex-direction: row;
+}
+
 .HistoryPage-header-label{
     font-size: 20px;
     font-weight: bold;
@@ -11,6 +16,10 @@
     text-align: start;
     padding-left: 5px;
     box-sizing: border-box;
+}
+
+.HistoryPage-header-input{
+    height: 30px;
 }
 
 .HistoryPage-entry {

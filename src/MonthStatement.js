@@ -21,6 +21,10 @@ class MonthStatement {
         this.monthlyEntires.push(entry);
         this.calculateTotal();
     }
+
+    isStatementEmpty() {
+        return this.monthlyEntires.length === 0;
+    }
 }
 
 export default MonthStatement;

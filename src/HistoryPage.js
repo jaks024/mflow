@@ -10,7 +10,7 @@ class HistoryPage extends React.Component {
         let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         let dates = [["Dates"]];
         for (let i = 0; i < 31; i++) {
-            dates.push([months[this.props.currentMonth - 1] + " " + (i + 1) + ", " + this.props.currentYearStatement.year]);
+            dates.push([months[this.props.currentMonth - 1] + " " + (i + 1) + ", " + this.props.currentAnnualStatement.year]);
         }
 
         return dates.map((date, i) => {
@@ -23,7 +23,7 @@ class HistoryPage extends React.Component {
                 return <GridRow key={GridRow.newRowId() + "-row"} rowContent={headerRowContent} isHeaderRow={true}/>
             } else {
 
-                let entries = this.props.currentYearStatement.getMonthEntries(this.props.currentMonth);
+                let entries = this.props.currentAnnualStatement.getMonthEntries(this.props.currentMonth);
                 let rowContent = [date];
                 categories.forEach(categoryName => {
                     rowContent.push([]);
@@ -61,13 +61,37 @@ class HistoryPage extends React.Component {
         );
     }
 
+    renderSelectOption(options) {
+        return options.map((op) => {
+            return <option key={op + "-view-option"} value={op}>{op}</option>;
+        });
+    }
+
+    onChangeViewYear = (e) => {
+        const year = e.target.value;
+        this.props.onChangeViewYear(year);
+    }
+
+    onChangeViewMonth =(e) => {
+        const month = e.target.value;
+        this.props.onChangeViewMonth(month);
+    }
+
     render() {
         return (
             <div className="HistoryPage-body">
-                <div className="HistoryPage-header-label">History</div>
+                <div className="HistoryPage-header-content">
+                    <div className="HistoryPage-header-label">History</div>
+                    <select className="HistoryPage-header-select" onChange={(e) => this.onChangeViewYear(e)}>
+                        {this.renderSelectOption(this.props.availableYears)}
+                    </select>
+                    <select className="HistoryPage-header-select" onChange={(e) => this.onChangeViewMonth(e)}>
+                        {this.renderSelectOption(this.props.availableMonths)}
+                    </select>
+                </div>
                 <div className="HistoryPage-content" data-simplebar data-simplebar-auto-hide="false">
                     <div className="HistoryPage-grid">
-                            {this.renderGrid(this.props.currentYearStatement.categories)}
+                            {this.renderGrid(this.props.currentAnnualStatement.categories)}
                     </div>
                 </div>
             </div>

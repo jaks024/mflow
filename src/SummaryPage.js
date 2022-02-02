@@ -11,11 +11,11 @@ class SummaryPage extends React.Component {
                     <div className="SummaryPage-income-expense-block">
                     <div className="SummaryPage-income-expense-line">
                             <span className="income-indicator">&#9650;</span> 
-                            ${this.props.currentYearStatement.getMonthTotalIncome(this.props.currentMonth).toFixed(2)}
+                            ${this.props.currentAnnualStatement.getMonthTotalIncome(this.props.currentMonth).toFixed(2)}
                         </div>
                         <div className="SummaryPage-income-expense-line">
                             <span className="expense-indicator">&#9660;</span> 
-                            ${this.props.currentYearStatement.getMonthTotalExpense(this.props.currentMonth).toFixed(2)}
+                            ${this.props.currentAnnualStatement.getMonthTotalExpense(this.props.currentMonth).toFixed(2)}
                         </div>
                     </div>
                 </div>
@@ -24,11 +24,11 @@ class SummaryPage extends React.Component {
                     <div className="SummaryPage-income-expense-block">
                         <div className="SummaryPage-income-expense-line">
                             <span className="income-indicator">&#9650;</span> 
-                            ${this.props.currentYearStatement.totalIncome.toFixed(2)}
+                            ${this.props.currentAnnualStatement.totalIncome.toFixed(2)}
                         </div>
                         <div className="SummaryPage-income-expense-line">
                             <span className="expense-indicator">&#9660;</span> 
-                            ${this.props.currentYearStatement.totalExpense.toFixed(2)}
+                            ${this.props.currentAnnualStatement.totalExpense.toFixed(2)}
                         </div>
                     </div>
                 </div>
