@@ -1,8 +1,7 @@
 import MonthStatement from "./MonthStatement";
 
 class AnnualStatement {
-    constructor(id, year) {
-        this.id = id;
+    constructor(year) {
         this.year = year;
         this.totalIncome = 0;
         this.totalExpense = 0;
@@ -27,7 +26,7 @@ class AnnualStatement {
         });
     }
 
-    addMonthlyStatement(statement) {
+    replaceMonthlyStatement(statement) {
         this.monthlyStatements[statement.month - 1] = statement;
         this.calculateTotal();
     }

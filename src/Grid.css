@@ -6,10 +6,11 @@
     width: 200px;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .grid-cell-date{
-    width: 100px;
+    width: 120px;
     font-weight: bold;
 }
 

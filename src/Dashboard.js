@@ -15,11 +15,15 @@ class Dashboard extends React.Component {
         this.state = {
             currentMonth: 1,
             currentYearIndex: 0,
-            allAnnualStatements: [new AnnualStatement(0, "2022"), new AnnualStatement(1, "2023")],
+            allAnnualStatements: [],
         }
     }
 
     getCurrentAnnualStatement() {
+        if (this.state.allAnnualStatements.length === 0) {
+            return null;
+        }
+        console.log(this.state.currentYearIndex);
         return this.state.allAnnualStatements[this.state.currentYearIndex];
     }
 
@@ -29,28 +33,46 @@ class Dashboard extends React.Component {
         this.setState({allAnnualStatements: newAllAnnualStatement});
     }
 
+    addNewAnnualStatementWithEntry(entry) {
+        const newAllAnnualStatements = this.state.allAnnualStatements;
+        const newAnnualStatement = new AnnualStatement(entry.date.year);
+        newAnnualStatement.addCategory(entry.category);
+        newAnnualStatement.addEntryToMonthStatement(entry.date.month, entry);
+        newAllAnnualStatements.push(newAnnualStatement);
+        const newCurrentYearIndex = newAllAnnualStatements.length - 1;
+        this.setState({allAnnualStatements: newAllAnnualStatements,
+            currentYearIndex: newCurrentYearIndex,
+            currentMonth: entry.date.month});
+        console.log(newAllAnnualStatements);
+    }
+
     handleNewEntry = (entry) => {
+        if (this.getCurrentAnnualStatement() === null) {
+            this.addNewAnnualStatementWithEntry(entry);
+            return;
+        }
+
         const newCurrentAnnualStatement = this.getCurrentAnnualStatement();
+        let annualStatementIndex = this.state.currentYearIndex;
         if (entry.date.year !== newCurrentAnnualStatement.year) {
             let yearDNE = true;
-            this.state.allAnnualStatements.forEach(statement => {
+            this.state.allAnnualStatements.forEach((statement, i) => {
                 if (statement.year === entry.date.year) {
                     yearDNE = false;
+                    annualStatementIndex = i;
                 } 
             });
             if (yearDNE) {
-                let newAllAnnualStatements = this.state.allAnnualStatements;
-                let newAnnualStatement = new AnnualStatement(2, entry.date.year);
-                newAnnualStatement.addCategory(entry.category);
-                newAnnualStatement.addEntryToMonthStatement(entry.date.month, entry);
-                newAllAnnualStatements.push(newAnnualStatement);
-                this.setState({allAnnualStatements: newAllAnnualStatements});
-            }
-        } else {
-            newCurrentAnnualStatement.addCategory(entry.category);
-            newCurrentAnnualStatement.addEntryToMonthStatement(entry.date.month, entry);
-            this.setState({currentYearStatement: newCurrentAnnualStatement})
-        }
+                this.addNewAnnualStatementWithEntry(entry);
+                return;
+            } 
+        } 
+        const newAllAnnualStatements = this.state.allAnnualStatements;
+        newAllAnnualStatements[annualStatementIndex].addCategory(entry.category);
+        newAllAnnualStatements[annualStatementIndex].addEntryToMonthStatement(entry.date.month, entry);
+        this.setState({allAnnualStatements: newAllAnnualStatements,
+            currentYearIndex: annualStatementIndex,
+            currentMonth: entry.date.month})
 
     }
 
@@ -73,7 +95,11 @@ class Dashboard extends React.Component {
 
     getAvailableMonths() {
         let month = [];
-        this.getCurrentAnnualStatement().monthlyStatements.forEach(monthStatement => {
+        const currentAnnualStatement = this.getCurrentAnnualStatement();
+        if (currentAnnualStatement == null) {
+            return null;
+        }
+        currentAnnualStatement.monthlyStatements.forEach(monthStatement => {
             if (!monthStatement.isStatementEmpty()) {
                 month.push(monthStatement.month);
             }
@@ -83,11 +109,17 @@ class Dashboard extends React.Component {
     }
 
     handleChangeViewYear = (year) => {
-        console.log(year);
         const allAnnualStatements = this.state.allAnnualStatements;
         for(let i = 0; i < allAnnualStatements.length; ++i) {
             if (allAnnualStatements[i].year === year) {
-                this.setState({currentYearIndex: i});
+                let firstAvailableMonth = -1;
+                allAnnualStatements[i].monthlyStatements.forEach(monthStatement => {
+                    if (!monthStatement.isStatementEmpty()) {
+                        firstAvailableMonth = monthStatement.month;
+                    }
+                });
+
+                this.setState({currentYearIndex: i, currentMonth: firstAvailableMonth});
                 return;
             }
         }

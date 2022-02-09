@@ -60,3 +60,29 @@
     box-sizing: content-box;
     justify-content: flex-start;
 }
+
+.HistoryPage-header-select{
+    margin-top: 35px;
+    margin-left: 10px;
+    width: 100px;
+    height: 30px;
+    background: none;
+    border: white 1px solid;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all ease 0.2s;
+}
+
+.HistoryPage-header-select:focus{
+    background: white;
+    color: black;
+}
+
+.HistoryPage-select-label{
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 100px;
+    height: 100%;
+    margin-left: 50px;
+}

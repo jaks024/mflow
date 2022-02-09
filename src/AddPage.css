@@ -35,6 +35,13 @@
     border: 1px white solid;
     margin: 5px;
     color: white;
+    border-radius: 5px;
+    transition: all ease 0.2s;
+}
+
+.AddPage-field-input:focus{
+    background: white;
+    color: black;
 }
 
 .AddPage-form-btn{
@@ -46,4 +53,16 @@
     height: 30px;
     width: 100px;
     margin-right: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all ease 0.2s;
+}
+
+.AddPage-form-btn:hover{
+    background: white;
+    color: black;
+}
+
+.AddPage-form-btn:active{
+    background: rgb(202, 202, 202);
 }
