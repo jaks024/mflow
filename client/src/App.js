@@ -14,8 +14,7 @@ function App() {
   return (
     <div className="App">
       <div className="App-body">
-        <Dashboard
-          appName={!data ? "Loading..." : data}/>
+        <Dashboard />
       </div>
     </div>
   );

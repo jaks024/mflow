@@ -155,8 +155,13 @@ class Dashboard extends React.Component {
                 <div className="Dashboard-content">
                     <div className="Dashbaord-content-left" >
                         <div className="Dashboard-header">
-                            <div className="Dashboard-header-label">{this.props.appName}</div>
-
+                            <div className="Dashboard-header-label">MFlow</div>
+                            <GoogleLogin 
+                                clientId={this.CLIENT_ID}
+                                buttonText="Log in with Google"
+                                onSuccess={this.handleLogin}
+                                onFailure={this.handleLogin}
+                                cookiePolicy={'single_host_origin'}/>
                         </div>
                         <div className="Dashboard-content-left-scrollabe" data-simplebar>
                             <SummaryPage currentAnnualStatement={this.getCurrentAnnualStatement()}

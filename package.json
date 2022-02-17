@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/jaks024/mflow#readme",
   "dependencies": {
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "google-auth-library": "^7.12.0"
   },
   "engines": {
     "node": "16.13.2"
