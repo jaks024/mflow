@@ -18,6 +18,8 @@
     font-size: 40px;
     font-weight: bold;
     display: flex;
+    flex-wrap: wrap;
+    
 }
 
 .SummaryPage-income-expense-line {

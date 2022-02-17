@@ -6,8 +6,11 @@ import HistoryPage from "./HistoryPage";
 import AnnualStatement from "./AnnualStatement";
 import 'simplebar'; 
 import 'simplebar/dist/simplebar.css';
+import GoogleLogin from "react-google-login";
 
 class Dashboard extends React.Component {
+
+    CLIENT_ID = '91993730445-4jjm5pf1kvja9m8r6b66uarvnqmdir1b.apps.googleusercontent.com';
 
     constructor(props) {
         super(props);
@@ -130,6 +133,22 @@ class Dashboard extends React.Component {
         this.setState({currentMonth: month});
     }
 
+    handleLogin = async googleData => {
+        const res = await fetch("/api/v1/auth/google", {
+            method: "POST",
+            body: JSON.stringify({
+            token: googleData.tokenId
+          }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+        const data = await res.json()
+        console.log(data);
+        // store returned user somehow
+      }
+
+
     render() {
         return (
             <div className="Dashboard-body">
@@ -137,6 +156,7 @@ class Dashboard extends React.Component {
                     <div className="Dashbaord-content-left" >
                         <div className="Dashboard-header">
                             <div className="Dashboard-header-label">MFlow</div>
+
                         </div>
                         <div className="Dashboard-content-left-scrollabe" data-simplebar>
                             <SummaryPage currentAnnualStatement={this.getCurrentAnnualStatement()}

@@ -38,7 +38,7 @@ class SummaryPage extends React.Component {
                 <div>
                     <div className="SummaryPage-header-label">This Month</div>
                     <div className="SummaryPage-income-expense-block">
-                    <div className="SummaryPage-income-expense-line">
+                        <div className="SummaryPage-income-expense-line">
                             <span className="income-indicator">&#9650;</span> 
                             ${this.getMonthTotalIncome()}
                         </div>
