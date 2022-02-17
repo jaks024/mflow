@@ -155,7 +155,7 @@ class Dashboard extends React.Component {
                 <div className="Dashboard-content">
                     <div className="Dashbaord-content-left" >
                         <div className="Dashboard-header">
-                            <div className="Dashboard-header-label">MFlow</div>
+                            <div className="Dashboard-header-label">{this.props.appName}</div>
 
                         </div>
                         <div className="Dashboard-content-left-scrollabe" data-simplebar>
