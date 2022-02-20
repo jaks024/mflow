@@ -133,21 +133,27 @@ class Dashboard extends React.Component {
         this.setState({currentMonth: month});
     }
 
-    handleLogin = async googleData => {
-        const res = await fetch("/api/v1/auth/google", {
-            method: "POST",
-            body: JSON.stringify({
-            token: googleData.tokenId
-          }),
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
-        const data = await res.json()
-        console.log(data);
-        // store returned user somehow
-      }
+    successLoginGoogle = (response) => {
+        console.log(response);
+        var url = `/login?access_token=${response.tokenObj.access_token}`;
+        //var params = { access_token: response.tokenObj.access_token };
+        //url.search = new URLSearchParams(params).toString();
+        console.log(url);
+        fetch(url)
+            .then((res) => res.json())
+            .then((data) => {console.log("dashboard called api"); console.log(data)});
+    }
+    failureLoginGoogle = (response) => {
+        console.log("failed to login to google");
+        console.log(response);
+    }
 
+    saveToDrive = () => {
+        var data = JSON.stringify(this.state);
+        fetch(`/save?data=${data}`)
+            .then((res) => res.json())
+            .then((data) => {console.log("dashboard called save"); console.log(data)});
+    }
 
     render() {
         return (
@@ -156,12 +162,17 @@ class Dashboard extends React.Component {
                     <div className="Dashbaord-content-left" >
                         <div className="Dashboard-header">
                             <div className="Dashboard-header-label">MFlow</div>
+                            <button onClick={this.saveToDrive}>
+                                Save
+                            </button>
                             <GoogleLogin 
                                 clientId={this.CLIENT_ID}
                                 buttonText="Log in with Google"
-                                onSuccess={this.handleLogin}
-                                onFailure={this.handleLogin}
-                                cookiePolicy={'single_host_origin'}/>
+                                onSuccess={this.successLoginGoogle}
+                                onFailure={this.failureLoginGoogle}
+                                cookiePolicy={'single_host_origin'}
+                                scope={'https://www.googleapis.com/auth/drive'}
+                                isSignedIn={true}/>
                         </div>
                         <div className="Dashboard-content-left-scrollabe" data-simplebar>
                             <SummaryPage currentAnnualStatement={this.getCurrentAnnualStatement()}
