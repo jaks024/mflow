@@ -16,10 +16,17 @@ app.get("/login", (req, res) => {
     res.json({ message: "logged in!" });
   });
   
-app.get("/save", (req, res) => {
+app.get("/save", async (req, res) => {
   console.log("save request handled");
+  //await driveAPI.create('MFlow Data')
   driveAPI.save(req.query.data);
     res.json({ message: "saved!" });
+});
+
+app.get("/get", async (req, res) => {
+  console.log("get request handled");
+  driveAPI.getUserData(req.query.fileId);
+    res.json({ message: "get!" });
 });
 
 app.get("/load", (req, res) => {

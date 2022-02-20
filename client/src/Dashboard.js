@@ -155,6 +155,12 @@ class Dashboard extends React.Component {
             .then((data) => {console.log("dashboard called save"); console.log(data)});
     }
 
+    getDataFromDrive = () => {
+        fetch(`/get?fileId=1JA12bO59ckI7bHm6srkPzRcKSs_yU2Z8Mighx8rpTUX6rE3d`)
+            .then((res) => res.json())
+            .then((data) => {console.log("dashboard called get"); console.log(data)});
+    }
+
     render() {
         return (
             <div className="Dashboard-body">
@@ -165,13 +171,16 @@ class Dashboard extends React.Component {
                             <button onClick={this.saveToDrive}>
                                 Save
                             </button>
+                            <button onClick={this.getDataFromDrive}>
+                                Get
+                            </button>
                             <GoogleLogin 
                                 clientId={this.CLIENT_ID}
                                 buttonText="Log in with Google"
                                 onSuccess={this.successLoginGoogle}
                                 onFailure={this.failureLoginGoogle}
                                 cookiePolicy={'single_host_origin'}
-                                scope={'https://www.googleapis.com/auth/drive'}
+                                scope={'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata'}
                                 isSignedIn={true}/>
                         </div>
                         <div className="Dashboard-content-left-scrollabe" data-simplebar>
