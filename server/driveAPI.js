@@ -52,6 +52,7 @@ exports.save = async function saveData(data) {
   try{
     const response = await drive.files.create({
           requestBody: {
+            parents: "mflow",
               name: 'mflow_user_data.json', //file name
               mimeType: 'text/plain',
           },
@@ -67,3 +68,16 @@ exports.save = async function saveData(data) {
       console.log(error.message);
   }
 }  
+
+exports.load = async function loadData() {
+  try{
+    const response = await drive.files.list({
+        q: "name='mflow_user_data.json'",
+      });  
+      // report the response from the request
+      console.log(response.data);
+  }catch (error) {
+      //report the error message
+      console.log(error.message);
+  }
+}

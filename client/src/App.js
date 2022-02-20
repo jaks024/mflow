@@ -16,6 +16,11 @@ function App() {
       .then((data) => {console.log("called save"); setData(data.message);})}>
         test upload
         </button>
+        <button onClick={() => fetch("/load")
+      .then((res) => res.json())
+      .then((data) => {console.log("called load"); setData(data.message);})}>
+        test load
+        </button>
         <Dashboard />
       </div>
     </div>

@@ -22,6 +22,12 @@ app.get("/save", (req, res) => {
     res.json({ message: "saved!" });
 });
 
+app.get("/load", (req, res) => {
+  console.log("load request handled");
+  driveAPI.load();
+    res.json({ message: "loaded!" });
+});
+
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
   console.log("get request not handled");
