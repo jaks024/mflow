@@ -120,25 +120,12 @@ exports.save = async function saveData(data) {
 
 exports.getUserData = async function get(fileId) {
   try{
-    var download;
     const response = await drive.files.get({
       fileId: fileId,
       alt: 'media',
-    }, {
-      responseType: 'stream'
-    }, (err, res) => {
-      res.data
-      .on('end', () => {
-        console.log("data end");
-      })
-      .on('error', err => {
-        console.log('Error', err);
-      })
-      .pipe(download);
-    });  
+    });
     console.log("in get");
     console.log(response.data);
-    console.log(download);
   }catch (error) {
       //report the error message
       console.log(error.message);
