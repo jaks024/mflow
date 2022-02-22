@@ -8,6 +8,14 @@ class MonthStatement {
         this.monthlyEntires = [];
     }
 
+    copy(statement) {
+        this.id = statement.id;
+        this.month = statement.month;
+        this.totalIncome = statement.totalIncome;
+        this.totalExpense = statement.totalExpense;
+        this.monthlyEntires = statement.monthlyEntires;
+    }
+
     calculateTotal() {
         this.totalIncome = 0;
         this.totalExpense = 0;

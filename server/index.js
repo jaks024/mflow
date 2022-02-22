@@ -10,34 +10,35 @@ const app = express();
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 app.get("/login", (req, res) => {
-  console.log("login request handled");
-  console.log(req.query.access_token);
   driveAPI.setCredentials(req.query.access_token);
-    res.json({ message: "logged in!" });
+  res.json({
+    message: "/login requets handled!"
   });
+});
   
 app.get("/save", async (req, res) => {
-  console.log("save request handled");
-  //await driveAPI.create('MFlow Data')
-  driveAPI.save(req.query.data);
-    res.json({ message: "saved!" });
+    const status = await driveAPI.save(req.query.data);
+    res.json({ 
+      status: status, 
+      message: "/save request handled!" 
+    });
 });
 
 app.get("/get", async (req, res) => {
-  console.log("get request handled");
-  driveAPI.getUserData(req.query.fileId);
-    res.json({ message: "get!" });
-});
-
-app.get("/load", (req, res) => {
-  console.log("load request handled");
-  driveAPI.load();
-    res.json({ message: "loaded!" });
+  var data = null;
+  const files = await driveAPI.listSaveFile();
+  if (files.length > 0) {
+    data = await driveAPI.getUserData(files[0].id);
+  } 
+  res.json({ 
+    userData: data, 
+    message: "/get request handled!" 
+  });
 });
 
 // All other GET requests not handled before will return our React app
 app.get('*', (req, res) => {
-  console.log("get request not handled");
+  console.log("request not handled!");
 });
 
 app.listen(PORT, () => {

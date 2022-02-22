@@ -9,6 +9,17 @@ class AnnualStatement {
         this.categories = [];
     }
 
+    copy(statement) {
+        this.year = statement.year;
+        this.totalIncome = statement.totalIncome;
+        this.totalExpense = statement.totalExpense;
+        this.monthlyStatements = this.initEmptyMonthStatement();
+        this.categories = statement.categories;
+        for (let i = 0; i < this.monthlyStatements.length; i++) {
+            this.monthlyStatements[i].copy(statement.monthlyStatements[i]);
+        }
+    }
+
     initEmptyMonthStatement() {
         let statements = new Array(12);
         for (let i = 0; i < statements.length; i++) {

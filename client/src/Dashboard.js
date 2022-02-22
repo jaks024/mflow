@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import SummaryPage from "./SummaryPage";
 import './Dashboard.css'
 import AddPage from "./AddPage";
@@ -21,12 +22,11 @@ class Dashboard extends React.Component {
             allAnnualStatements: [],
         }
     }
-
+    
     getCurrentAnnualStatement() {
         if (this.state.allAnnualStatements.length === 0) {
             return null;
         }
-        console.log(this.state.currentYearIndex);
         return this.state.allAnnualStatements[this.state.currentYearIndex];
     }
 
@@ -73,10 +73,11 @@ class Dashboard extends React.Component {
         const newAllAnnualStatements = this.state.allAnnualStatements;
         newAllAnnualStatements[annualStatementIndex].addCategory(entry.category);
         newAllAnnualStatements[annualStatementIndex].addEntryToMonthStatement(entry.date.month, entry);
-        this.setState({allAnnualStatements: newAllAnnualStatements,
+        this.setState({
+            allAnnualStatements: newAllAnnualStatements,
             currentYearIndex: annualStatementIndex,
-            currentMonth: entry.date.month})
-
+            currentMonth: entry.date.month
+        });
     }
 
     handleNewCategory = (c) => {
@@ -92,7 +93,6 @@ class Dashboard extends React.Component {
             console.log(statement);
             years.push(statement.year);
         });
-        console.log(years);
         return years;
     }
 
@@ -107,7 +107,6 @@ class Dashboard extends React.Component {
                 month.push(monthStatement.month);
             }
         });
-        console.log(month);
         return month;
     }
 
@@ -129,19 +128,17 @@ class Dashboard extends React.Component {
     }
 
     handleChangeViewMonth = (month) => {
-        console.log(month);
         this.setState({currentMonth: month});
     }
 
     successLoginGoogle = (response) => {
-        console.log(response);
         var url = `/login?access_token=${response.tokenObj.access_token}`;
-        //var params = { access_token: response.tokenObj.access_token };
-        //url.search = new URLSearchParams(params).toString();
-        console.log(url);
         fetch(url)
             .then((res) => res.json())
-            .then((data) => {console.log("dashboard called api"); console.log(data)});
+            .then((data) => {
+                console.log(data.message);
+                this.getDataFromDrive();
+            });
     }
     failureLoginGoogle = (response) => {
         console.log("failed to login to google");
@@ -152,28 +149,48 @@ class Dashboard extends React.Component {
         var data = JSON.stringify(this.state);
         fetch(`/save?data=${data}`)
             .then((res) => res.json())
-            .then((data) => {console.log("dashboard called save"); console.log(data)});
+            .then((data) => {
+                // add icon to show this in UI 
+                console.log(data.message);
+                console.log(`Save Status: ${data.status ? "Success" : "Failure"}`);
+            });
     }
 
     getDataFromDrive = () => {
-        fetch(`/get?fileId=1JA12bO59ckI7bHm6srkPzRcKSs_yU2Z8Mighx8rpTUX6rE3d`)
+        fetch(`/get`)
             .then((res) => res.json())
-            .then((data) => {console.log("dashboard called get"); console.log(data)});
+            .then((data) => {
+                // save file not found in GDrive
+                if (data.userData === null) {
+                    // Make a new save file 
+                    this.saveToDrive();
+                    return;
+                }
+
+                const allAnnualStatements = [];
+                data.userData.allAnnualStatements.forEach(statement => {
+                    const newStatement = new AnnualStatement(statement.year);
+                    newStatement.copy(statement);
+                    allAnnualStatements.push(newStatement);
+                });
+
+                this.setState({
+                    currentMonth: data.userData.currentMonth,
+                    currentYearIndex: data.userData.currentYearIndex,
+                    allAnnualStatements: allAnnualStatements
+                });
+                console.log(data.message); 
+            });
     }
 
     render() {
+        this.saveToDrive();
         return (
             <div className="Dashboard-body">
                 <div className="Dashboard-content">
                     <div className="Dashbaord-content-left" >
                         <div className="Dashboard-header">
                             <div className="Dashboard-header-label">MFlow</div>
-                            <button onClick={this.saveToDrive}>
-                                Save
-                            </button>
-                            <button onClick={this.getDataFromDrive}>
-                                Get
-                            </button>
                             <GoogleLogin 
                                 clientId={this.CLIENT_ID}
                                 buttonText="Log in with Google"
