@@ -62,7 +62,6 @@ exports.save = async function saveData(data) {
       spaces: 'appDataFolder',
       q: `name='${SAVE_FILE_NAME}'`,
     });  
-
     if (listResponse.data.files.length === 0) {
       var fileMetadata = {
         'name' : `${SAVE_FILE_NAME}`,

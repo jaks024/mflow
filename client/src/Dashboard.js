@@ -1,5 +1,4 @@
 import React from "react";
-import { useEffect } from "react";
 import SummaryPage from "./SummaryPage";
 import './Dashboard.css'
 import AddPage from "./AddPage";
@@ -7,7 +6,7 @@ import HistoryPage from "./HistoryPage";
 import AnnualStatement from "./AnnualStatement";
 import 'simplebar'; 
 import 'simplebar/dist/simplebar.css';
-import GoogleLogin from "react-google-login";
+import { GoogleLogin, GoogleLogout } from "react-google-login";
 
 class Dashboard extends React.Component {
 
@@ -17,6 +16,9 @@ class Dashboard extends React.Component {
         super(props);
 
         this.state = {
+            isSignedIn: false,
+            userName: '',
+            userEmail: '',
             currentMonth: 1,
             currentYearIndex: 0,
             allAnnualStatements: [],
@@ -34,6 +36,7 @@ class Dashboard extends React.Component {
         let newAllAnnualStatement = this.state.allAnnualStatements;
         newAllAnnualStatement[this.state.currentYearIndex] = newStatement;
         this.setState({allAnnualStatements: newAllAnnualStatement});
+        this.saveToDrive();
     }
 
     addNewAnnualStatementWithEntry(entry) {
@@ -46,7 +49,7 @@ class Dashboard extends React.Component {
         this.setState({allAnnualStatements: newAllAnnualStatements,
             currentYearIndex: newCurrentYearIndex,
             currentMonth: entry.date.month});
-        console.log(newAllAnnualStatements);
+        this.saveToDrive();
     }
 
     handleNewEntry = (entry) => {
@@ -78,6 +81,7 @@ class Dashboard extends React.Component {
             currentYearIndex: annualStatementIndex,
             currentMonth: entry.date.month
         });
+        this.saveToDrive();
     }
 
     handleNewCategory = (c) => {
@@ -90,7 +94,6 @@ class Dashboard extends React.Component {
     getAvailableYears() {
         let years = [];
         this.state.allAnnualStatements.forEach(statement => {
-            console.log(statement);
             years.push(statement.year);
         });
         return years;
@@ -122,6 +125,7 @@ class Dashboard extends React.Component {
                 });
 
                 this.setState({currentYearIndex: i, currentMonth: firstAvailableMonth});
+                this.saveToDrive();
                 return;
             }
         }
@@ -129,10 +133,18 @@ class Dashboard extends React.Component {
 
     handleChangeViewMonth = (month) => {
         this.setState({currentMonth: month});
+        this.saveToDrive();
     }
 
     successLoginGoogle = (response) => {
         var url = `/login?access_token=${response.tokenObj.access_token}`;
+
+        this.setState({
+            userEmail: response.profileObj.email,
+            userName: response.profileObj.name,
+            isSignedIn: true
+        });
+
         fetch(url)
             .then((res) => res.json())
             .then((data) => {
@@ -140,12 +152,28 @@ class Dashboard extends React.Component {
                 this.getDataFromDrive();
             });
     }
+
     failureLoginGoogle = (response) => {
         console.log("failed to login to google");
         console.log(response);
     }
 
+    successLogoutGoogle = () => {
+        this.setState({
+            isSignedIn: false,
+            userName: '',
+            userEmail: '',
+            currentMonth: 1,
+            currentYearIndex: 0,
+            allAnnualStatements: [],
+        });
+        console.log("successfully logged out of google");
+    }
+
     saveToDrive = () => {
+        if (!this.state.isSignedIn) {
+            return;
+        }
         var data = JSON.stringify(this.state);
         fetch(`/save?data=${data}`)
             .then((res) => res.json())
@@ -184,23 +212,49 @@ class Dashboard extends React.Component {
     }
 
     render() {
-        this.saveToDrive();
         return (
             <div className="Dashboard-body">
                 <div className="Dashboard-content">
                     <div className="Dashbaord-content-left" >
                         <div className="Dashboard-header">
                             <div className="Dashboard-header-label">MFlow</div>
-                            <GoogleLogin 
-                                clientId={this.CLIENT_ID}
-                                buttonText="Log in with Google"
-                                onSuccess={this.successLoginGoogle}
-                                onFailure={this.failureLoginGoogle}
-                                cookiePolicy={'single_host_origin'}
-                                scope={'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata'}
-                                isSignedIn={true}/>
                         </div>
                         <div className="Dashboard-content-left-scrollabe" data-simplebar>
+                            <div className="Dashboard-account-block">
+                                <div className={`Dashboard-user-info ${!this.state.isSignedIn ? "Dashboard-disabled" : ""}`}>
+                                    <div className="Dashboard-user-info-texts">
+                                        <div>{this.state.userName}</div>
+                                        <div>{this.state.userEmail}</div>
+                                    </div>
+                                    <GoogleLogout 
+                                        clientId={this.CLIENT_ID}
+                                        buttonText="Log out"
+                                        onLogoutSuccess={this.successLogoutGoogle}
+                                        render={renderProps => (
+                                            <button onClick={renderProps.onClick} 
+                                            disabled={renderProps.disabled} 
+                                            className="Dashboard-google-button">
+                                                Log out
+                                                </button>
+                                          )}/>
+                                </div>
+                                <div className={`Dashboard-google-login-wrapper ${this.state.isSignedIn ? "Dashboard-disabled" : ""}`}>
+                                    <GoogleLogin 
+                                        clientId={this.CLIENT_ID}
+                                        onSuccess={this.successLoginGoogle}
+                                        onFailure={this.failureLoginGoogle}
+                                        cookiePolicy={'single_host_origin'}
+                                        scope={'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata'}
+                                        isSignedIn={true}
+                                        render={renderProps => (
+                                            <button onClick={renderProps.onClick} 
+                                            disabled={renderProps.disabled} 
+                                            className="Dashboard-google-button">
+                                                Log in with Google to save your data!
+                                            </button>
+                                          )}/>
+                                </div>
+                            </div>
                             <SummaryPage currentAnnualStatement={this.getCurrentAnnualStatement()}
                                         currentMonth={this.state.currentMonth} />
                             <br/>

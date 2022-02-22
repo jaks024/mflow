@@ -89,7 +89,6 @@ class HistoryPage extends React.Component {
     }
 
     getCurrentMonth() {
-        console.log("current month: " + this.props.currentMonth);
         if (this.props.availableMonths !== null) {
             let selectedMonth = this.props.availableMonths[0];
             this.props.availableMonths.forEach(month => {
