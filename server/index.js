@@ -2,22 +2,26 @@ const driveAPI = require('./driveAPI.js');
 
 const path = require('path');
 const express = require("express");
+const bodyParser = require('body-parser');
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
 
 app.use(express.static(path.resolve(__dirname, '../client/build')));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.raw());
 
 app.get("/login", (req, res) => {
-  driveAPI.setCredentials(req.query.access_token);
+  driveAPI.setCredentials(req.get("accessToken"));
   res.json({
     message: "/login requets handled!"
   });
 });
   
-app.get("/save", async (req, res) => {
-    const status = await driveAPI.save(req.query.data);
+app.post("/save", async (req, res) => {
+    const status = await driveAPI.save(req.body);
     res.json({ 
       status: status, 
       message: "/save request handled!" 

@@ -154,15 +154,18 @@ class Dashboard extends React.Component {
     }
 
     successLoginGoogle = (response) => {
-        var url = `/login?access_token=${response.tokenObj.access_token}`;
-
         this.setState({
             userEmail: response.profileObj.email,
             userName: response.profileObj.name,
             isSignedIn: true
         });
 
-        fetch(url)
+        fetch('/login', {
+            method: 'GET',
+            headers: {
+                accessToken: response.tokenObj.access_token
+            }
+        })
             .then((res) => res.json())
             .then((data) => {
                 console.log(data.message);
@@ -192,15 +195,21 @@ class Dashboard extends React.Component {
             return;
         }
         this.setState({isSaving: true});
-        var data = JSON.stringify(this.state);
-        fetch(`/save?data=${data}`)
-            .then((res) => res.json())
-            .then((data) => {
-                // add icon to show this in UI 
-                console.log(data.message);
-                console.log(`Save Status: ${data.status ? "Success" : "Failure"}`);
-                this.setState({isSaving: false});
-            });
+        fetch(`/save`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state)
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            // add icon to show this in UI 
+            console.log(data.message);
+            console.log(`Save Status: ${data.status ? "Success" : "Failure"}`);
+            this.setState({isSaving: false});
+        });
     }
 
     getDataFromDrive = () => {
