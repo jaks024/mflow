@@ -31,6 +31,20 @@ class SummaryPage extends React.Component {
         return 0;
     }
 
+    renderCategoryTotals() {
+        if (this.props.currentAnnualStatement !== null) {
+            const monthStatement = this.props.currentAnnualStatement.getMonthStatement(this.props.currentMonth);
+            const categoriesTotal = monthStatement.getCategoriesIncomeExpenseTotal();
+            return categoriesTotal.map((entry) => {
+                return <div className="SummaryPage-income-expense-category">
+                        {entry.category}: 
+                        <span className="income-indicator">&#9650;</span> ${entry.income} 
+                        <span className="expense-indicator">&#9660;</span> ${entry.expense} 
+                    </div>
+            });
+        }
+    }
+
     render() {
         return (
             <div className="SummaryPage-body">
@@ -45,6 +59,9 @@ class SummaryPage extends React.Component {
                         <div className="SummaryPage-income-expense-line">
                             <span className="expense-indicator">&#9660;</span> 
                             ${this.getMonthTotalExpense()}
+                        </div>
+                        <div>
+                            {this.renderCategoryTotals()}
                         </div>
                     </div>
                 </div>

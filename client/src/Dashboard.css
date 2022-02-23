@@ -59,7 +59,7 @@
 .Dashboard-account-block{
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    justify-content: flex-start;
     margin-bottom: 20px;
     font-size: 15px;
 }
@@ -78,7 +78,7 @@
 
 .Dashboard-google-login-wrapper{
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     height: 30px;
 }
 

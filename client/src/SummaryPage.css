@@ -25,3 +25,10 @@
 .SummaryPage-income-expense-line {
     margin-right: 50px;
 }
+
+.SummaryPage-income-expense-category{
+    margin-left: 25px;
+    font-size: 15px;
+    text-align: left;
+    font-weight: bold;
+}

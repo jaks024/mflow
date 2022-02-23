@@ -67,6 +67,9 @@ class AnnualStatement {
     getMonthEntries(month) {
         return this.monthlyStatements[month - 1].monthlyEntires;
     }
+    getMonthStatement(month) {
+        return this.monthlyStatements[month - 1];
+    }
 }
 
 export default AnnualStatement;

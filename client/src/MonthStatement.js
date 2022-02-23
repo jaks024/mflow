@@ -33,6 +33,31 @@ class MonthStatement {
     isStatementEmpty() {
         return this.monthlyEntires.length === 0;
     }
+
+    getCategoriesIncomeExpenseTotal() {
+        const totals = [];
+        this.monthlyEntires.forEach(entry => {
+            var added = false;
+            for (let i = 0; i < totals.length; i++) {
+                const t = totals[i];
+                if (t.category === entry.category) {
+                    t.income += +entry.income;
+                    t.expense += +entry.expense;
+                    totals[i] = t;
+                    added = true;
+                    break;
+                }
+            }
+            if (!added) {
+                totals.push({
+                    category: entry.category, 
+                    income: +entry.income, 
+                    expense: +entry.expense
+                });
+            }
+        });
+        return totals;
+    }
 }
 
 export default MonthStatement;
