@@ -60,11 +60,11 @@ class SummaryPage extends React.Component {
                             <span className="expense-indicator">&#9660;</span> 
                             ${this.getMonthTotalExpense()}
                         </div>
-                        <div>
-                            {this.renderCategoryTotals()}
-                        </div>
                     </div>
                 </div>
+                <div>
+                            {this.renderCategoryTotals()}
+                        </div>
                 <div>
                     <div className="SummaryPage-header-label">This Year</div>
                     <div className="SummaryPage-income-expense-block">

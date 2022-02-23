@@ -11,6 +11,16 @@ import { GoogleLogin, GoogleLogout } from "react-google-login";
 class Dashboard extends React.Component {
 
     CLIENT_ID = '91993730445-4jjm5pf1kvja9m8r6b66uarvnqmdir1b.apps.googleusercontent.com';
+    ClickCount = 0;
+    saveIntervalId = setInterval(() => {
+        if (this.ClickCount > 0) {
+            if (this.ClickCount === 1) {
+                this.saveToDrive();
+                console.log("Saved to drive");
+            }
+            --this.ClickCount;
+        }
+    }, 1000);
 
     constructor(props) {
         super(props);
@@ -19,12 +29,19 @@ class Dashboard extends React.Component {
             isSignedIn: false,
             userName: '',
             userEmail: '',
+            isSaving: false,
             currentMonth: 1,
             currentYearIndex: 0,
             allAnnualStatements: [],
         }
     }
     
+    incrementClickCount() {
+        if (this.ClickCount < 2) {
+            ++this.ClickCount;
+        }
+    }
+
     getCurrentAnnualStatement() {
         if (this.state.allAnnualStatements.length === 0) {
             return null;
@@ -36,7 +53,7 @@ class Dashboard extends React.Component {
         let newAllAnnualStatement = this.state.allAnnualStatements;
         newAllAnnualStatement[this.state.currentYearIndex] = newStatement;
         this.setState({allAnnualStatements: newAllAnnualStatement});
-        this.saveToDrive();
+        this.incrementClickCount();
     }
 
     addNewAnnualStatementWithEntry(entry) {
@@ -49,7 +66,7 @@ class Dashboard extends React.Component {
         this.setState({allAnnualStatements: newAllAnnualStatements,
             currentYearIndex: newCurrentYearIndex,
             currentMonth: entry.date.month});
-        this.saveToDrive();
+        this.incrementClickCount();
     }
 
     handleNewEntry = (entry) => {
@@ -81,7 +98,7 @@ class Dashboard extends React.Component {
             currentYearIndex: annualStatementIndex,
             currentMonth: entry.date.month
         });
-        this.saveToDrive();
+        this.incrementClickCount();
     }
 
     handleNewCategory = (c) => {
@@ -125,7 +142,7 @@ class Dashboard extends React.Component {
                 });
 
                 this.setState({currentYearIndex: i, currentMonth: firstAvailableMonth});
-                this.saveToDrive();
+                this.incrementClickCount();
                 return;
             }
         }
@@ -133,7 +150,7 @@ class Dashboard extends React.Component {
 
     handleChangeViewMonth = (month) => {
         this.setState({currentMonth: month});
-        this.saveToDrive();
+        this.incrementClickCount();
     }
 
     successLoginGoogle = (response) => {
@@ -174,6 +191,7 @@ class Dashboard extends React.Component {
         if (!this.state.isSignedIn) {
             return;
         }
+        this.setState({isSaving: true});
         var data = JSON.stringify(this.state);
         fetch(`/save?data=${data}`)
             .then((res) => res.json())
@@ -181,6 +199,7 @@ class Dashboard extends React.Component {
                 // add icon to show this in UI 
                 console.log(data.message);
                 console.log(`Save Status: ${data.status ? "Success" : "Failure"}`);
+                this.setState({isSaving: false});
             });
     }
 
@@ -226,6 +245,9 @@ class Dashboard extends React.Component {
                                         <div>{this.state.userName}</div>
                                         <div>{this.state.userEmail}</div>
                                     </div>
+                                    <div className={`Dashboard-save-status-text ${!this.state.isSaving ?  "Dashboard-disabled" : ""}`}>
+                                        Saving to Google Drive...
+                                        </div>
                                     <GoogleLogout 
                                         clientId={this.CLIENT_ID}
                                         buttonText="Log out"
