@@ -27,22 +27,65 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    transition: all 0.15s ease;
+    position: relative;
+}
+.HistoryPage-entry:hover {
+    color: white;
+    background-color: rgb(34, 34, 34);
+    box-shadow:  0px 0px 10px rgb(10, 10, 10);
+    border-radius: 5px;
+}
+
+.HistoryPage-entry:hover > .History-page-entry-content > .HistoryPage-entry-delete-btn {
+    width: 20px;
+    margin-left: 5px;
+    color: white;
+}
+
+.HistoryPage-entry:hover > .HistoryPage-entry-collapse {
+    height: fit-content;
+    max-height: 50px;
+}
+
+.HistoryPage-entry-collapse{
+    max-height: 0px;
+    text-align: left;
+    overflow: hidden;
+    transition: all 0.75s ease;
+    margin-left: 25px;
+}
+
+.History-page-entry-content{
+    display: flex;
+    flex-direction: row;
+}
+
+.HistoryPage-entry-delete-btn{
+    width: 0px;
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    background: none;
+    color: rgb(210, 210, 210);
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    overflow: hidden;
+    user-select: none;
+    transition: all 0.15s ease;
 }
 
 .HistoryPage-entry-main{
     display: flex;
     flex-direction: row;
     justify-content: left;
+    height: 22px;
 }
 
 .HistoryPage-entry-main > div {
     margin-right: 15px;
-}
-
-.HistoryPage-entry-collapse{
-    text-align: left;
-    margin-left: 20px;
-    display: none;
+    padding-bottom: 2px;
 }
 
 .HistoryPage-content{

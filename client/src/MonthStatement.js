@@ -58,6 +58,20 @@ class MonthStatement {
         });
         return totals;
     }
+
+    deleteEntry(entryId) {
+        this.monthlyEntires = this.monthlyEntires.filter((entry) => {
+            return entry.id !== entryId;
+        });
+        this.calculateTotal();
+    }
+
+    deleteEntryByCategory(categoryName) {
+        this.monthlyEntires = this.monthlyEntires.filter((entry) => {
+            return entry.category !== categoryName;
+        });
+        this.calculateTotal();
+    }
 }
 
 export default MonthStatement;

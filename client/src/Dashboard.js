@@ -11,14 +11,14 @@ import { GoogleLogin, GoogleLogout } from "react-google-login";
 class Dashboard extends React.Component {
 
     CLIENT_ID = '91993730445-4jjm5pf1kvja9m8r6b66uarvnqmdir1b.apps.googleusercontent.com';
-    ClickCount = 0;
+    editCount = 0;
     saveIntervalId = setInterval(() => {
-        if (this.ClickCount > 0) {
-            if (this.ClickCount === 1) {
+        if (this.editCount > 0) {
+            if (this.editCount === 1) {
                 this.saveToDrive();
                 console.log("Saved to drive");
             }
-            --this.ClickCount;
+            --this.editCount;
         }
     }, 1000);
 
@@ -36,9 +36,9 @@ class Dashboard extends React.Component {
         }
     }
     
-    incrementClickCount() {
-        if (this.ClickCount < 2) {
-            ++this.ClickCount;
+    incrementEditCount() {
+        if (this.editCount < 2) {
+            ++this.editCount;
         }
     }
 
@@ -53,7 +53,7 @@ class Dashboard extends React.Component {
         let newAllAnnualStatement = this.state.allAnnualStatements;
         newAllAnnualStatement[this.state.currentYearIndex] = newStatement;
         this.setState({allAnnualStatements: newAllAnnualStatement});
-        this.incrementClickCount();
+        this.incrementEditCount();
     }
 
     addNewAnnualStatementWithEntry(entry) {
@@ -66,7 +66,7 @@ class Dashboard extends React.Component {
         this.setState({allAnnualStatements: newAllAnnualStatements,
             currentYearIndex: newCurrentYearIndex,
             currentMonth: entry.date.month});
-        this.incrementClickCount();
+        this.incrementEditCount();
     }
 
     handleNewEntry = (entry) => {
@@ -98,7 +98,7 @@ class Dashboard extends React.Component {
             currentYearIndex: annualStatementIndex,
             currentMonth: entry.date.month
         });
-        this.incrementClickCount();
+        this.incrementEditCount();
     }
 
     handleNewCategory = (c) => {
@@ -106,6 +106,20 @@ class Dashboard extends React.Component {
         if (newCurrentAnnualStatement.addCategory(c)) {
             this.setCurrentAnnualStatement(newCurrentAnnualStatement);
         }
+    }
+
+    handleDeleteEntry = (entryId) => {
+        const currentAnnualStatement = this.getCurrentAnnualStatement();
+        currentAnnualStatement.deleteEntry(entryId, this.state.currentMonth);
+        this.setCurrentAnnualStatement(currentAnnualStatement);
+        this.incrementEditCount();
+    } 
+
+    handleDeleteCategory = (categoryName) => {
+        const currentAnnualStatement = this.getCurrentAnnualStatement();
+        currentAnnualStatement.deleteCategory(categoryName);
+        this.setCurrentAnnualStatement(currentAnnualStatement);
+        this.incrementEditCount();
     }
 
     getAvailableYears() {
@@ -142,7 +156,7 @@ class Dashboard extends React.Component {
                 });
 
                 this.setState({currentYearIndex: i, currentMonth: firstAvailableMonth});
-                this.incrementClickCount();
+                this.incrementEditCount();
                 return;
             }
         }
@@ -150,7 +164,7 @@ class Dashboard extends React.Component {
 
     handleChangeViewMonth = (month) => {
         this.setState({currentMonth: month});
-        this.incrementClickCount();
+        this.incrementEditCount();
     }
 
     successLoginGoogle = (response) => {
@@ -301,7 +315,9 @@ class Dashboard extends React.Component {
                                     onChangeViewYear={this.handleChangeViewYear}
                                     onChangeViewMonth={this.handleChangeViewMonth}
                                     availableYears={this.getAvailableYears()}
-                                    availableMonths={this.getAvailableMonths()}/>
+                                    availableMonths={this.getAvailableMonths()}
+                                    onDeleteEntry={this.handleDeleteEntry}
+                                    onDeleteCategory={this.handleDeleteCategory}/>
                     </div>
                 </div>
                 

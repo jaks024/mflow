@@ -40,7 +40,7 @@ class HistoryPage extends React.Component {
             if (date[0] === "Dates") {
                 let headerRowContent = [date];
                 categories.forEach(categoryName => {
-                    headerRowContent.push([categoryName]);
+                    headerRowContent.push([this.renderHeader(categoryName)]);
                 });
                 return <GridRow key={GridRow.newRowId() + "-row"} rowContent={headerRowContent} isHeaderRow={true}/>
             } else {
@@ -65,13 +65,29 @@ class HistoryPage extends React.Component {
         });
     }
 
+    renderHeader(text) {
+        return ( 
+            <div key={`Grid-header-${text}`} className="HistoryPage-entry">
+                <div className="History-page-entry-content">
+                    <div className="HistoryPage-entry-delete-btn" onClick={() => this.props.onDeleteCategory(text)}>&#215;</div>
+                    <div className="HistoryPage-entry-main">
+                        {text}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     renderEntry(entry) {
         return (
             <div key={entry.id} className="HistoryPage-entry">
-                <div className="HistoryPage-entry-main">
-                    <div>{entry.location}</div>
-                    <div><span className="income-indicator">&#9650;</span>${entry.income}</div>
-                    <div><span className="expense-indicator">&#9660;</span>${entry.expense}</div>
+                <div className="History-page-entry-content">
+                    <div className="HistoryPage-entry-delete-btn" onClick={() => this.props.onDeleteEntry(entry.id)}>&#215;</div>
+                    <div className="HistoryPage-entry-main">
+                        <div>{entry.location}</div>
+                        <div><span className="income-indicator">&#9650;</span>${entry.income}</div>
+                        <div><span className="expense-indicator">&#9660;</span>${entry.expense}</div>
+                    </div>
                 </div>
                 <div className="HistoryPage-entry-collapse">
                     {entry.description}

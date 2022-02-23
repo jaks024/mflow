@@ -70,6 +70,23 @@ class AnnualStatement {
     getMonthStatement(month) {
         return this.monthlyStatements[month - 1];
     }
+
+    deleteEntry(entryId, month) {
+        const monthStatement = this.getMonthStatement(month);
+        monthStatement.deleteEntry(entryId);
+        this.replaceMonthlyStatement(monthStatement);
+        this.calculateTotal();
+    }
+
+    deleteCategory(categoryName) {
+        this.categories = this.categories.filter((cat) => {
+            return cat !== categoryName;
+        });
+        this.monthlyStatements.forEach(statement => {
+            statement.deleteEntryByCategory(categoryName);
+        });
+        this.calculateTotal();
+    }
 }
 
 export default AnnualStatement;
