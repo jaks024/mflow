@@ -23,7 +23,7 @@ class AnnualStatement {
     initEmptyMonthStatement() {
         let statements = new Array(12);
         for (let i = 0; i < statements.length; i++) {
-            statements[i] = new MonthStatement(i, i + 1);
+            statements[i] = new MonthStatement(i, +i + 1);
         }
         return statements;
     }

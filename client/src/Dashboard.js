@@ -113,7 +113,7 @@ class Dashboard extends React.Component {
         this.state.allAnnualStatements.forEach(statement => {
             years.push(statement.year);
         });
-        return years;
+        return years.sort();
     }
 
     getAvailableMonths() {
@@ -133,7 +133,7 @@ class Dashboard extends React.Component {
     handleChangeViewYear = (year) => {
         const allAnnualStatements = this.state.allAnnualStatements;
         for(let i = 0; i < allAnnualStatements.length; ++i) {
-            if (allAnnualStatements[i].year === year) {
+            if (+allAnnualStatements[i].year === +year) {
                 let firstAvailableMonth = -1;
                 allAnnualStatements[i].monthlyStatements.forEach(monthStatement => {
                     if (!monthStatement.isStatementEmpty()) {

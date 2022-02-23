@@ -6,18 +6,37 @@ import GridRow from "./GridRow";
 
 class HistoryPage extends React.Component {
 
+    monthsAndDays = [
+        {name: "Jan", num: 1, days: 31},
+        {name: "Feb", num: 2, days: 29},
+        {name: "Mar", num: 3, days: 31},
+        {name: "Apr", num: 4, days: 30},
+        {name: "May", num: 5, days: 31},
+        {name: "Jun", num: 6, days: 30},
+        {name: "Jul", num: 7, days: 31},
+        {name: "Aug", num: 8, days: 31},
+        {name: "Sep", num: 9, days: 30},
+        {name: "Oct", num: 10, days: 31},
+        {name: "Nov", num: 11, days: 30},
+        {name: "Dec", num: 12, days: 31}
+    ];
+
     renderGrid(annualStatement) {
         if (annualStatement === null) {
             return;
         }
         const categories = annualStatement.categories;
-        let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        let dates = [["Dates"]];
-        for (let i = 0; i < 31; i++) {
-            dates.push([months[this.props.currentMonth - 1] + " " + (i + 1) + ", " + this.props.currentAnnualStatement.year]);
+        const rows = [["Dates"]];
+        for (const month of this.monthsAndDays) {
+            if (+month.num === +this.props.currentMonth) {
+                for (let i = 0; i < month.days; i++) {
+                    rows.push([`${month.name} ${(i + 1)}, ${this.props.currentAnnualStatement.year}`]);
+                }
+                break;
+            }
         }
 
-        return dates.map((date, i) => {
+        return rows.map((date, i) => {
             if (date[0] === "Dates") {
                 let headerRowContent = [date];
                 categories.forEach(categoryName => {
@@ -66,7 +85,7 @@ class HistoryPage extends React.Component {
             return null;
         }
         return options.map((op) => {
-            return <option key={op + "-view-option"} value={op}>{op}</option>;
+            return <option key={op + "-history-view-option"} value={op}>{op}</option>;
         });
     }
 
@@ -77,8 +96,12 @@ class HistoryPage extends React.Component {
 
     onChangeViewMonth =(e) => {
         const month = e.target.value;
-        console.log("Changed: " + month);
-        this.props.onChangeViewMonth(month);
+        for (const m of this.monthsAndDays) {
+            if (m.name === month) {
+                this.props.onChangeViewMonth(m.num);
+                break;
+            }
+        }
     }
 
     getCurrentYear() {
@@ -101,6 +124,19 @@ class HistoryPage extends React.Component {
         }
         return "";
     }
+    
+
+
+    numericMonthToNamed(months) {
+        if (months === null) {
+            return null;
+        }
+        const namedMonths = [];
+        months.forEach(m => {
+            namedMonths.push(this.monthsAndDays[m - 1].name);
+        });
+        return namedMonths;
+    }
 
     render() {
         return (
@@ -113,9 +149,9 @@ class HistoryPage extends React.Component {
                         {this.renderSelectOption(this.props.availableYears)}
                     </select>
                     <div className="HistoryPage-select-label">Month</div>
-                    <select className="HistoryPage-header-select" value={this.getCurrentMonth()}
+                    <select className="HistoryPage-header-select" value={this.monthsAndDays[this.props.currentMonth - 1].name}
                          onChange={(e) => this.onChangeViewMonth(e)}>
-                        {this.renderSelectOption(this.props.availableMonths)}
+                        {this.renderSelectOption(this.numericMonthToNamed(this.props.availableMonths))}
                     </select>
                 </div>
                 <div className="HistoryPage-content" data-simplebar data-simplebar-auto-hide="false">

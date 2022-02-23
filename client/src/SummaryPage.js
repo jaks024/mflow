@@ -36,7 +36,7 @@ class SummaryPage extends React.Component {
             const monthStatement = this.props.currentAnnualStatement.getMonthStatement(this.props.currentMonth);
             const categoriesTotal = monthStatement.getCategoriesIncomeExpenseTotal();
             return categoriesTotal.map((entry) => {
-                return <div className="SummaryPage-income-expense-category">
+                return <div key={entry.category + "-summary-subtotal-category-name"} className="SummaryPage-income-expense-category">
                         {entry.category}: 
                         <span className="income-indicator">&#9650;</span> ${entry.income} 
                         <span className="expense-indicator">&#9660;</span> ${entry.expense} 
@@ -63,8 +63,8 @@ class SummaryPage extends React.Component {
                     </div>
                 </div>
                 <div>
-                            {this.renderCategoryTotals()}
-                        </div>
+                    {this.renderCategoryTotals()}
+                </div>
                 <div>
                     <div className="SummaryPage-header-label">This Year</div>
                     <div className="SummaryPage-income-expense-block">
