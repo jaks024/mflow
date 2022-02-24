@@ -7,6 +7,7 @@ Available at https://mflow24.herokuapp.com/
 1. Sign in with Google first so the entires are saved.
 2. Input data into each field you want under "Add Entry" and use to "Add" button to add. 
 
+### Symbol Meanings
 ▲ : means income\
 ▼ : means expense
 
@@ -20,6 +21,7 @@ Available at https://mflow24.herokuapp.com/
 Notes:
 - Once you signed in with Google, it will auto sign in into the same account and fetch data from drive next time you visit the site. 
 - Under "Add Entry", the field Category, Location, Income, and Expense are mandatory. Category and Location can be anything thats not whitespace. Income and Expense only accepts numbers. 
+- You can only add an entry if either income = 0 and expense > 0 or income > 0 and expense = 0 
 - The "Add Category" section is optional. You do not need to first add a category then add a entry to that category. "Add Entry" automatically adds a category if the category doesn't exist. 
 
 ## Demo
