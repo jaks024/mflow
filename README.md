@@ -24,7 +24,8 @@ Available at https://mflow24.herokuapp.com/
 - You can only add an entry if either income = 0 and expense > 0 or income > 0 and expense = 0 
 - The "Add Category" section is optional. You do not need to first add a category then add a entry to that category. "Add Entry" automatically adds a category if the category doesn't exist. 
 
-## Demo
+## Screenshot & Demo
+![image](https://user-images.githubusercontent.com/42505518/155610662-7badfd69-9f9d-4a6b-bcea-ee95dd0540eb.png)
 ![demo](mflow-demo.gif)
 
 ## Libraries Used
