@@ -18,7 +18,7 @@ Available at https://mflow24.herokuapp.com/
 - Hover over the category name in the table that you want to delete, and press the "x" button to delete it. 
 - WARNING: deleting a category deletes all entires in the year that belongs to that category. 
 
-Notes:
+### Notes
 - Once you signed in with Google, it will auto sign in into the same account and fetch data from drive next time you visit the site. 
 - Under "Add Entry", the field Category, Location, Income, and Expense are mandatory. Category and Location can be anything thats not whitespace. Income and Expense only accepts numbers. 
 - You can only add an entry if either income = 0 and expense > 0 or income > 0 and expense = 0 
