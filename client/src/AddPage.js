@@ -51,7 +51,11 @@ class AddPage extends React.Component {
                 break;
             }
         }
-        console.log(this.state.inputDay);
+        if (isNaN(this.state.inputIncome) || isNaN(this.state.inputExpense) ||
+            this.state.inputIncome.length === 0 || this.state.inputExpense.length === 0 ||
+            this.state.inputCategory.length === 0 || this.state.inputLocation.length === 0) {
+            return;
+        }
         this.props.onAddEntry(new Entry(
             this.state.idCount, 
             new Date(this.state.inputYear, monthNumeric, this.state.inputDay), 
@@ -88,17 +92,17 @@ class AddPage extends React.Component {
     updateInput(field, evt) {
         const val = evt.target.value;
         if (field === 1) 
-            this.setState({inputCategory: val});
+            this.setState({inputCategory: val.trim()});
         else if (field === 2) 
-            this.setState({inputLocation: val});
+            this.setState({inputLocation: val.trim()});
         else if (field === 3) 
             this.setState({inputIncome: val});
         else if (field === 4) 
             this.setState({inputExpense: val});
         else if (field === 5) 
-            this.setState({inputDescription: val});
+            this.setState({inputDescription: val.trim()});
         else if (field === 6)
-            this.setState({inputNewCategory: val});
+            this.setState({inputNewCategory: val.trim()});
     }
 
     renderOptions(options, keySuffix) {

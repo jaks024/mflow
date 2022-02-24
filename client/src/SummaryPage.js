@@ -31,18 +31,33 @@ class SummaryPage extends React.Component {
         return 0;
     }
 
-    renderCategoryTotals() {
+    renderMonthCategoryTotals() {
         if (this.props.currentAnnualStatement !== null) {
             const monthStatement = this.props.currentAnnualStatement.getMonthStatement(this.props.currentMonth);
             const categoriesTotal = monthStatement.getCategoriesIncomeExpenseTotal();
             return categoriesTotal.map((entry) => {
-                return <div key={entry.category + "-summary-subtotal-category-name"} className="SummaryPage-income-expense-category">
-                        {entry.category}: 
-                        <span className="income-indicator">&#9650;</span> ${entry.income} 
+                return <div key={entry.category + "-summary-month-subtotal-category-name"} className="SummaryPage-income-expense-category">
+                        {entry.category}: &emsp;
+                        <span className="income-indicator">&#9650;</span> ${entry.income} &emsp;
                         <span className="expense-indicator">&#9660;</span> ${entry.expense} 
                     </div>
             });
         }
+        return null;
+    }
+
+    renderYearCategoryTotals() {
+        if (this.props.currentAnnualStatement !== null) {
+            const allCategoriesTotal = this.props.currentAnnualStatement.getAllCategoryTotals();
+            return allCategoriesTotal.map((entry) => {
+                return <div key={entry.category + "-summary-year-subtotal-category-name"} className="SummaryPage-income-expense-category">
+                        {entry.category}: &emsp;
+                        <span className="income-indicator">&#9650;</span> ${entry.totals.income} &emsp;
+                        <span className="expense-indicator">&#9660;</span> ${entry.totals.expense} 
+                    </div>
+            });
+        }
+        return null;
     }
 
     render() {
@@ -63,7 +78,7 @@ class SummaryPage extends React.Component {
                     </div>
                 </div>
                 <div>
-                    {this.renderCategoryTotals()}
+                    {this.renderMonthCategoryTotals()}
                 </div>
                 <div>
                     <div className="SummaryPage-header-label">This Year</div>
@@ -77,6 +92,9 @@ class SummaryPage extends React.Component {
                             ${this.getAnnualTotalExpense()}
                         </div>
                     </div>
+                </div>
+                <div>
+                    {this.renderYearCategoryTotals()}
                 </div>
             </div>
         );

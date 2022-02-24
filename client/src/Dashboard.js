@@ -289,7 +289,7 @@ class Dashboard extends React.Component {
                                         onSuccess={this.successLoginGoogle}
                                         onFailure={this.failureLoginGoogle}
                                         cookiePolicy={'single_host_origin'}
-                                        scope={'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata'}
+                                        scope={'https://www.googleapis.com/auth/drive.appdata'}
                                         isSignedIn={true}
                                         render={renderProps => (
                                             <button onClick={renderProps.onClick} 

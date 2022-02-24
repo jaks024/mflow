@@ -87,6 +87,24 @@ class AnnualStatement {
         });
         this.calculateTotal();
     }
+
+    getAllCategoryTotals() {
+        const categoriesTotalMap = new Map();
+        this.monthlyStatements.forEach(statement => {
+            const catSubTotalArray = statement.getCategoriesIncomeExpenseTotal();
+            catSubTotalArray.forEach(entry => {
+                if (categoriesTotalMap.has(entry.category)) {
+                    const oldTotal = categoriesTotalMap.get(entry.category);
+                    const newTotalIncome = entry.income + oldTotal.income;
+                    const newTotalExpense = entry.expense + oldTotal.expense;
+                    categoriesTotalMap.set(entry.category, {income: newTotalIncome, expense: newTotalExpense});
+                } else {
+                    categoriesTotalMap.set(entry.category, {income: entry.income, expense: entry.expense});
+                }
+            });
+        });
+        return Array.from(categoriesTotalMap, ([category, totals]) => ({category, totals}));
+    }
 }
 
 export default AnnualStatement;
