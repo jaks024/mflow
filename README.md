@@ -24,3 +24,10 @@ Notes:
 
 ## Demo
 ![demo](mflow-demo.gif)
+
+## Libraries Used
+[react](https://github.com/facebook/react)\
+[react-google-login](https://github.com/anthonyjgrove/react-google-login)\
+[express](https://github.com/expressjs/express)\
+[googleapis](https://github.com/googleapis/googleapis)\
+[simplebar](https://github.com/Grsmto/simplebar)
