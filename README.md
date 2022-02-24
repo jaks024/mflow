@@ -1,14 +1,13 @@
 # MFlow (Money Flow)
-A spreadsheet-like web app used for tracking income and expense. 
-Features Sign in with Google to save data to your Google Drive.
+A spreadsheet-like web app used for tracking income and expense.\
+Features Sign in with Google to save data to your Google Drive.\
 Available at https://mflow24.herokuapp.com/
 
 ## How to Use
 1. Sign in with Google first so the entires are saved.
 2. Input data into each field you want under "Add Entry" and use to "Add" button to add. 
 
-▲ : means income
-
+▲ : means income\
 ▼ : means expense
 
 ### Deleting Entires
