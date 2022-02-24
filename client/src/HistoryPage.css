@@ -43,6 +43,10 @@
     color: white;
 }
 
+.HistoryPage-entry:hover > .History-page-entry-content > .HistoryPage-entry-main {
+    width: 260px;
+}
+
 .HistoryPage-entry:hover > .HistoryPage-entry-collapse {
     height: fit-content;
     max-height: 50px;
@@ -80,7 +84,7 @@
     display: flex;
     flex-direction: row;
     justify-content: left;
-    height: 22px;
+    height: fit-content;
 }
 
 .HistoryPage-entry-main > div {
