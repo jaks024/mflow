@@ -52,8 +52,8 @@ class AddPage extends React.Component {
             }
         }
         if (isNaN(this.state.inputIncome) || isNaN(this.state.inputExpense) ||
-            this.state.inputIncome.length === 0 || this.state.inputExpense.length === 0 ||
-            this.state.inputCategory.length === 0 || this.state.inputLocation.length === 0) {
+            this.state.inputIncome.trim().length === 0 || this.state.inputExpense.trim().length === 0 ||
+            this.state.inputCategory.trim().length === 0 || this.state.inputLocation.trim().length === 0) {
             return;
         }
         this.props.onAddEntry(new Entry(
@@ -61,9 +61,9 @@ class AddPage extends React.Component {
             new Date(this.state.inputYear, monthNumeric, this.state.inputDay), 
             this.state.inputIncome, 
             this.state.inputExpense, 
-            this.state.inputCategory, 
-            this.state.inputLocation, 
-            this.state.inputDescription));
+            this.state.inputCategory.trim(), 
+            this.state.inputLocation.trim(), 
+            this.state.inputDescription.trim()));
         this.setState({idCount: this.state.idCount + 1});
     }
 
@@ -92,17 +92,17 @@ class AddPage extends React.Component {
     updateInput(field, evt) {
         const val = evt.target.value;
         if (field === 1) 
-            this.setState({inputCategory: val.trim()});
+            this.setState({inputCategory: val});
         else if (field === 2) 
-            this.setState({inputLocation: val.trim()});
+            this.setState({inputLocation: val});
         else if (field === 3) 
             this.setState({inputIncome: val});
         else if (field === 4) 
             this.setState({inputExpense: val});
         else if (field === 5) 
-            this.setState({inputDescription: val.trim()});
+            this.setState({inputDescription: val});
         else if (field === 6)
-            this.setState({inputNewCategory: val.trim()});
+            this.setState({inputNewCategory: val});
     }
 
     renderOptions(options, keySuffix) {
