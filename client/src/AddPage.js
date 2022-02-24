@@ -53,7 +53,8 @@ class AddPage extends React.Component {
         }
         if (isNaN(this.state.inputIncome) || isNaN(this.state.inputExpense) ||
             this.state.inputIncome.trim().length === 0 || this.state.inputExpense.trim().length === 0 ||
-            this.state.inputCategory.trim().length === 0 || this.state.inputLocation.trim().length === 0) {
+            this.state.inputCategory.trim().length === 0 || this.state.inputLocation.trim().length === 0 ||
+            (+this.state.inputIncome !== 0 && +this.state.inputExpense !== 0)) {
             return;
         }
         this.props.onAddEntry(new Entry(

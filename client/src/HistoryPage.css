@@ -61,7 +61,7 @@
 }
 
 .HistoryPage-entry-location{
-    width: 80px;
+    width: 120px;
     word-wrap: break-word;
 }
 
@@ -137,4 +137,8 @@
     line-height: 80px;
     height: 100%;
     margin-left: 50px;
+}
+
+.HistoryPage-disabled{
+    display: none;
 }

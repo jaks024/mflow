@@ -85,8 +85,12 @@ class HistoryPage extends React.Component {
                     <div className="HistoryPage-entry-delete-btn" onClick={() => this.props.onDeleteEntry(entry.id)}>&#215;</div>
                     <div className="HistoryPage-entry-main">
                         <div className="HistoryPage-entry-location">{entry.location}</div>
-                        <div><span className="income-indicator">&#9650;</span>${entry.income.toFixed(2)}</div>
-                        <div><span className="expense-indicator">&#9660;</span>${entry.expense.toFixed(2)}</div>
+                        <div className={+entry.income === 0 ? "HistoryPage-disabled" : ""}>
+                            <span className="income-indicator">&#9650;</span>${(+entry.income).toFixed(2)}
+                        </div>
+                        <div className={+entry.expense === 0 ? "HistoryPage-disabled" : ""}>
+                            <span className="expense-indicator">&#9660;</span>${(+entry.expense).toFixed(2)}
+                        </div>
                     </div>
                 </div>
                 <div className="HistoryPage-entry-collapse">
