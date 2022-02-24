@@ -64,12 +64,12 @@ exports.save = async function saveData(data) {
     });  
     if (listResponse.data.files.length === 0) {
       var fileMetadata = {
-        'name' : `${SAVE_FILE_NAME}`,
+        'name' : SAVE_FILE_NAME,
         'parents' : ['appDataFolder']
       };
       var media = {
         mimeType: 'application/json',
-        body: data
+        body: JSON.stringify(data)
       };
       drive.files.create({
         resource: fileMetadata,
