@@ -108,10 +108,22 @@ class Dashboard extends React.Component {
         }
     }
 
+    // to prevent history auto select if there are no entries
+    handleNoEntriesInMonth(currentAnnualStatement) {
+        if (currentAnnualStatement.getMonthEntries(this.state.currentMonth).length === 0) {
+            const availableMonths = this.getAvailableMonths();
+            console.log(availableMonths);
+            if (availableMonths.length > 0) {
+                this.setState({currentMonth: availableMonths[0]});
+            }
+        }
+    }
+
     handleDeleteEntry = (entryId) => {
         const currentAnnualStatement = this.getCurrentAnnualStatement();
         currentAnnualStatement.deleteEntry(entryId, this.state.currentMonth);
         this.setCurrentAnnualStatement(currentAnnualStatement);
+        this.handleNoEntriesInMonth(currentAnnualStatement);
         this.incrementEditCount();
     } 
 
@@ -119,6 +131,7 @@ class Dashboard extends React.Component {
         const currentAnnualStatement = this.getCurrentAnnualStatement();
         currentAnnualStatement.deleteCategory(categoryName);
         this.setCurrentAnnualStatement(currentAnnualStatement);
+        this.handleNoEntriesInMonth(currentAnnualStatement);
         this.incrementEditCount();
     }
 
@@ -165,6 +178,18 @@ class Dashboard extends React.Component {
     handleChangeViewMonth = (month) => {
         this.setState({currentMonth: month});
         this.incrementEditCount();
+    }
+
+    handleDownloadData = async () => {
+        const json = JSON.stringify(this.state.allAnnualStatements, undefined, 2);
+        const blob = new Blob([json],{type:'application/json'});
+        const href = await URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = href;
+        link.download = "mflow-user-data.json";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 
     successLoginGoogle = (response) => {
@@ -306,6 +331,14 @@ class Dashboard extends React.Component {
                             <AddPage currentAnnualStatement={this.getCurrentAnnualStatement()} 
                                     onAddEntry={this.handleNewEntry}
                                     onAddCategory={this.handleNewCategory}/>
+                            <br/>
+                            <button className="Dashboard-google-button Dashboard-download-button"
+                                onClick={this.handleDownloadData}>
+                                Download JSON Data
+                            </button>
+                            <br/>
+                            <br/>
+                            <div className="Dashboard-credit">Made for and by <a href="https://jaks024.github.io/" target="_blank">jaks024</a> with ❤️</div>
                         </div>
 
                     </div>
