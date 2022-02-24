@@ -84,9 +84,9 @@ class HistoryPage extends React.Component {
                 <div className="History-page-entry-content">
                     <div className="HistoryPage-entry-delete-btn" onClick={() => this.props.onDeleteEntry(entry.id)}>&#215;</div>
                     <div className="HistoryPage-entry-main">
-                        <div>{entry.location}</div>
-                        <div><span className="income-indicator">&#9650;</span>${entry.income}</div>
-                        <div><span className="expense-indicator">&#9660;</span>${entry.expense}</div>
+                        <div className="HistoryPage-entry-location">{entry.location}</div>
+                        <div><span className="income-indicator">&#9650;</span>${entry.income.toFixed(2)}</div>
+                        <div><span className="expense-indicator">&#9660;</span>${entry.expense.toFixed(2)}</div>
                     </div>
                 </div>
                 <div className="HistoryPage-entry-collapse">

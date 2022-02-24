@@ -60,6 +60,11 @@
     margin-left: 25px;
 }
 
+.HistoryPage-entry-location{
+    width: 80px;
+    word-wrap: break-word;
+}
+
 .History-page-entry-content{
     display: flex;
     flex-direction: row;
@@ -88,7 +93,7 @@
 }
 
 .HistoryPage-entry-main > div {
-    margin-right: 15px;
+    margin-right: 5px;
     padding-bottom: 2px;
 }
 

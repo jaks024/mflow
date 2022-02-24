@@ -41,8 +41,8 @@ class SummaryPage extends React.Component {
             return categoriesTotal.map((entry) => {
                 return <div key={entry.category + "-summary-month-subtotal-category-name"} className="SummaryPage-income-expense-category">
                         {entry.category}: &emsp;
-                        <span className="income-indicator">&#9650;</span> ${entry.income} &emsp;
-                        <span className="expense-indicator">&#9660;</span> ${entry.expense} 
+                        <span className="income-indicator">&#9650;</span> ${entry.income.toFixed(2)} &emsp;
+                        <span className="expense-indicator">&#9660;</span> ${entry.expense.toFixed(2)} 
                     </div>
             });
         }
@@ -55,8 +55,8 @@ class SummaryPage extends React.Component {
             return allCategoriesTotal.map((entry) => {
                 return <div key={entry.category + "-summary-year-subtotal-category-name"} className="SummaryPage-income-expense-category">
                         {entry.category}: &emsp;
-                        <span className="income-indicator">&#9650;</span> ${entry.totals.income} &emsp;
-                        <span className="expense-indicator">&#9660;</span> ${entry.totals.expense} 
+                        <span className="income-indicator">&#9650;</span> ${entry.totals.income.toFixed(2)} &emsp;
+                        <span className="expense-indicator">&#9660;</span> ${entry.totals.expense.toFixed(2)} 
                     </div>
             });
         }
