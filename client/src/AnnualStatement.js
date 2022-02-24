@@ -42,15 +42,18 @@ class AnnualStatement {
         this.calculateTotal();
     }
 
+    isIndexInMonthlyStatementRange(index) {
+        return index >= 0 && index < this.monthlyStatements.length;
+    }
+
     addEntryToMonthStatement(month, entry) {
-        if (this.monthlyStatements[month - 1] != null) {
+        if (this.isIndexInMonthlyStatementRange(month - 1) && this.monthlyStatements[month - 1] != null) {
             this.monthlyStatements[month - 1].addEntry(entry);
         }
         this.calculateTotal();
     }
 
     addCategory(category) {
-        console.log(this.categories);
         if (this.categories.length > 0 && this.categories.includes(category)) {
             return false;
         }
@@ -59,16 +62,28 @@ class AnnualStatement {
     }
 
     getMonthTotalIncome(month) {
-        return this.monthlyStatements[month - 1].totalIncome;
+        if (this.isIndexInMonthlyStatementRange(month - 1)) {
+            return this.monthlyStatements[month - 1].totalIncome;
+        }
+        return 0;
     }
     getMonthTotalExpense(month) {
-        return this.monthlyStatements[month - 1].totalExpense;
+        if (this.isIndexInMonthlyStatementRange(month - 1)) {
+            return this.monthlyStatements[month - 1].totalExpense;
+        }
+        return 0;
     }
     getMonthEntries(month) {
-        return this.monthlyStatements[month - 1].monthlyEntires;
+        if (this.isIndexInMonthlyStatementRange(month - 1)) {
+            return this.monthlyStatements[month - 1].monthlyEntires;
+        }
+        return 0;
     }
     getMonthStatement(month) {
-        return this.monthlyStatements[month - 1];
+        if (this.isIndexInMonthlyStatementRange(month - 1)) {
+            return this.monthlyStatements[month - 1];
+        }
+        return null;
     }
 
     deleteEntry(entryId, month) {

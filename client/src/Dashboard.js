@@ -112,9 +112,10 @@ class Dashboard extends React.Component {
     handleNoEntriesInMonth(currentAnnualStatement) {
         if (currentAnnualStatement.getMonthEntries(this.state.currentMonth).length === 0) {
             const availableMonths = this.getAvailableMonths();
-            console.log(availableMonths);
             if (availableMonths.length > 0) {
                 this.setState({currentMonth: availableMonths[0]});
+            } else {
+                this.setState({currentMonth: 1});
             }
         }
     }
@@ -161,7 +162,7 @@ class Dashboard extends React.Component {
         const allAnnualStatements = this.state.allAnnualStatements;
         for(let i = 0; i < allAnnualStatements.length; ++i) {
             if (+allAnnualStatements[i].year === +year) {
-                let firstAvailableMonth = -1;
+                let firstAvailableMonth = 1;
                 allAnnualStatements[i].monthlyStatements.forEach(monthStatement => {
                     if (!monthStatement.isStatementEmpty()) {
                         firstAvailableMonth = monthStatement.month;

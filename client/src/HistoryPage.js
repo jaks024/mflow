@@ -165,7 +165,9 @@ class HistoryPage extends React.Component {
                         {this.renderSelectOption(this.props.availableYears)}
                     </select>
                     <div className="HistoryPage-select-label">Month</div>
-                    <select className="HistoryPage-header-select" value={this.monthsAndDays[this.props.currentMonth - 1].name}
+                    <select className="HistoryPage-header-select" 
+                        value={this.props.currentMonth - 1 >= 0 && this.props.currentMonth - 1 < this.monthsAndDays.length ?
+                                 this.monthsAndDays[this.props.currentMonth - 1].name : ""}
                          onChange={(e) => this.onChangeViewMonth(e)}>
                         {this.renderSelectOption(this.numericMonthToNamed(this.props.availableMonths))}
                     </select>

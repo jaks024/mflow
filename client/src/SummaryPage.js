@@ -34,6 +34,9 @@ class SummaryPage extends React.Component {
     renderMonthCategoryTotals() {
         if (this.props.currentAnnualStatement !== null) {
             const monthStatement = this.props.currentAnnualStatement.getMonthStatement(this.props.currentMonth);
+            if (monthStatement === null) {
+                return null;
+            }
             const categoriesTotal = monthStatement.getCategoriesIncomeExpenseTotal();
             return categoriesTotal.map((entry) => {
                 return <div key={entry.category + "-summary-month-subtotal-category-name"} className="SummaryPage-income-expense-category">
