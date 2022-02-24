@@ -22,6 +22,10 @@ class Dashboard extends React.Component {
         }
     }, 1000);
 
+    componentDidMount(){
+        document.title = "MFlow"
+    }
+
     constructor(props) {
         super(props);
 
@@ -339,7 +343,7 @@ class Dashboard extends React.Component {
                             </button>
                             <br/>
                             <br/>
-                            <div className="Dashboard-credit">Made for and by <a href="https://jaks024.github.io/" target="_blank">jaks024</a> with ❤️</div>
+                            <div className="Dashboard-credit">Made for and by <a href="https://jaks024.github.io/" target="_blank" rel="noopener noreferrer">jaks024</a> with ❤️</div>
                         </div>
 
                     </div>

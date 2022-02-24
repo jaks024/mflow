@@ -27,11 +27,11 @@ class AddPage extends React.Component {
             inputYear: 2022,
             inputMonth: "Jan",
             inputDay: 1,
-            inputCategory: "abc",         // 1
-            inputLocation: "soeb",         // 2
-            inputIncome: "123",           // 3
-            inputExpense: "423",          // 4
-            inputDescription: "dsafsafsd",      // 5
+            inputCategory: "",         // 1
+            inputLocation: "",         // 2
+            inputIncome: "0",           // 3
+            inputExpense: "0",          // 4
+            inputDescription: "",      // 5
             inputNewCategory: "",      // 6
         }
     }

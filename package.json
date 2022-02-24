@@ -1,7 +1,7 @@
 {
   "name": "mflow",
   "version": "1.0.0",
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "description": "A spreadsheet-like web app used for tracking income and expense.",
   "main": "index.js",
   "scripts": {
     "start": "node --max-http-header-size=16384 server/index.js ",
