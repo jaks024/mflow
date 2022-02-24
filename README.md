@@ -8,6 +8,7 @@ Available at https://mflow24.herokuapp.com/
 2. Input data into each field you want under "Add Entry" and use to "Add" button to add. 
 
 ▲ : means income
+
 ▼ : means expense
 
 ### Deleting Entires
